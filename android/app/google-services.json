@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "746133123476",
+    "project_id": "brain-development-center",
+    "storage_bucket": "brain-development-center.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746133123476:android:ac1a916d1b9b8f0be95f81",
+        "android_client_info": {
+          "package_name": "com.bdc.neurotrainer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAWuz02hr6hLBpYG9FKaqF36DSm6EnSc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
