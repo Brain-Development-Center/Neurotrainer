@@ -1,13 +1,14 @@
 {
   "project_info": {
     "project_number": "368852917579",
+    "firebase_url": "https://brain-development-center-f06f5-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "brain-development-center-f06f5",
     "storage_bucket": "brain-development-center-f06f5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:368852917579:android:a3f0c0f54294682b529cce",
+        "mobilesdk_app_id": "1:368852917579:android:138aceb917ce77cc529cce",
         "android_client_info": {
           "package_name": "com.bdc.neurotrainer"
         }
