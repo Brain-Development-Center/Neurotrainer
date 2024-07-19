@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   firebase_auth: ^5.1.2
   cloud_firestore: ^5.1.0
+  msix: ^3.16.7
 
   http: ^1.2.2
 
@@ -91,3 +92,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+
+msix_config:
+  display_name: Neurotrainer
+  publisher_display_name: Brain Development Center
+  identity_name: com.bdc.neurotrainer
+  msix_version: 1.0.0.0

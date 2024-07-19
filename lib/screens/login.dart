@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,13 +15,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
+  static const platform = MethodChannel('com.bdc.neurotrainer/data');
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   void signIn() async {
     try {
@@ -116,7 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: Text('Войти', style: TextStyle(color: Colors.white),),
             ),
-          )
+          ),
         ],
       ),
     );

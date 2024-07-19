@@ -21,7 +21,7 @@ void main() async {
   // });
   runApp(
     MaterialApp(
-      home: LoginScreen(),
+      home: HomeScreen(),
       debugShowCheckedModeBanner: true,
     )
   );
