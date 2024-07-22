@@ -7,13 +7,16 @@ project(runner LANGUAGES CXX)
 #
 # Any new source files that you add to the application should be added here.
 add_executable(${BINARY_NAME} WIN32
-  "flutter_window.cpp"
-  "main.cpp"
-  "utils.cpp"
-  "win32_window.cpp"
-  "${FLUTTER_MANAGED_DIR}/generated_plugin_registrant.cc"
-  "Runner.rc"
-  "runner.exe.manifest"
+    "flutter_window.cpp"
+    "main.cpp"
+    "utils.cpp"
+    "win32_window.cpp"
+    "${FLUTTER_MANAGED_DIR}/generated_plugin_registrant.cc"
+    "Runner.rc"
+    "runner.exe.manifest"
+    "thinkgear.h"
+    "thinkgear64.lib"
+    "thinkgear64.dll"
 )
 
 # Apply the standard set of build settings. This can be removed for applications
@@ -35,6 +38,10 @@ target_compile_definitions(${BINARY_NAME} PRIVATE "NOMINMAX")
 target_link_libraries(${BINARY_NAME} PRIVATE flutter flutter_wrapper_app)
 target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
+
+target_link_libraries(${BINARY_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/thinkgear64.lib")
+
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/thinkgear64.dll" DESTINATION "${CMAKE_BINARY_DIR}")
 
 # Run the Flutter tool portions of the build. This must not be removed.
 add_dependencies(${BINARY_NAME} flutter_assemble)

@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
       try {
         final result = await platform.invokeMethod<List<int>>('getNum');
         t = result!;
-        print(t);
       } on PlatformException catch (e) {
         t = [];
       }
@@ -47,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
 
-  Future<void> _getText() async {
+  void _getText() async {
     String t;
     try {
       final result = await platform.invokeMethod<String>('connectBluetooth');
@@ -68,21 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(text),
-          StreamBuilder<List<int>?>(
-            stream: getNums(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const CircularProgressIndicator.adaptive();
-              }
-              if (snapshot.hasError) {
-                return Text('Error');
-              } else {
-                return Center(
-                  child: Text(snapshot.data.toString(), style: TextStyle(fontSize: 26),),
-                );
-              }
-            },
-          )
+          // StreamBuilder<List<int>?>(
+          //   stream: getNums(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.connectionState == ConnectionState.waiting) {
+          //       return const CircularProgressIndicator.adaptive();
+          //     }
+          //     if (snapshot.hasError) {
+          //       return Text('Error');
+          //     } else {
+          //       return Center(
+          //         child: Text(snapshot.data.toString(), style: TextStyle(fontSize: 26),),
+          //       );
+          //     }
+          //   },
+          // )
         ],
       )
     );
