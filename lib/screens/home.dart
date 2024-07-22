@@ -67,21 +67,21 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(text),
-          // StreamBuilder<List<int>?>(
-          //   stream: getNums(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.connectionState == ConnectionState.waiting) {
-          //       return const CircularProgressIndicator.adaptive();
-          //     }
-          //     if (snapshot.hasError) {
-          //       return Text('Error');
-          //     } else {
-          //       return Center(
-          //         child: Text(snapshot.data.toString(), style: TextStyle(fontSize: 26),),
-          //       );
-          //     }
-          //   },
-          // )
+          StreamBuilder<List<int>?>(
+            stream: getNums(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator.adaptive();
+              }
+              if (snapshot.hasError) {
+                return Text('Error');
+              } else {
+                return Center(
+                  child: Text(snapshot.data.toString(), style: TextStyle(fontSize: 26),),
+                );
+              }
+            },
+          )
         ],
       )
     );

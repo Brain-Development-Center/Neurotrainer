@@ -8,33 +8,36 @@
 #include <flutter/standard_method_codec.h>
 #include <windows.h>
 #include <memory>
+#include <thread>
 
 #include "thinkgear.h"
 
-std::string connectBluetooth() {
-    int connectionId = TG_GetNewConnectionId();
-//    std::string error = "Error";
-//    if (connectionId < 0) {
-//        return std::string(error);
-//    }
-//    std::string comPortName = "\\\\.\\COM4";
-//    errCode = TG_Connect(connectionId, comPortName, TG_BAUD_57600, TG_STREAM_PACKETS);
-//    if (errCode < 0) {
-//        return std::string(error);
-//    }
-//    std::string no_error = "Connected";
-//    return no_error;
-    return std::to_string(connectionId);
-}
+using namespace std;
 
 FlutterWindow::FlutterWindow(const flutter::DartProject& project)
     : project_(project) {}
 
 FlutterWindow::~FlutterWindow() {}
 
+string connected = "Connected";
+char *comPortName = "\\\\.\\COM5";
+int connectionId = 0;
+
 bool FlutterWindow::OnCreate() {
   if (!Win32Window::OnCreate()) {
     return false;
+  }
+
+  connectionId = TG_GetNewConnectionId();
+
+  if (connectionId < 0) {
+      connected = "No connected";
+  }
+
+  int err_code = TG_Connect(connectionId, comPortName, TG_BAUD_57600, TG_STREAM_PACKETS);
+
+  if (err_code < 0) {
+      connected = "No connected";
   }
 
   RECT frame = GetClientArea();
@@ -54,9 +57,27 @@ bool FlutterWindow::OnCreate() {
             [](const flutter::MethodCall<>& call,
                std::unique_ptr<flutter::MethodResult<>> result) {
                 if (call.method_name() == "connectBluetooth") {
-                    result->Success(connectBluetooth());
+                    result->Success(connected);
+                } else if (call.method_name() == "getNum") {
+                    vector<int> arr(8, 0);
+                    while (true) {
+                        int packetsRead = TG_ReadPackets( connectionId, 1 );
+                        if (packetsRead == 1 ) {
+                            arr[0] = (int) TG_GetValue(connectionId, TG_DATA_DELTA);
+                            arr[1] = (int) TG_GetValue(connectionId, TG_DATA_THETA);
+                            arr[2] = (int) TG_GetValue(connectionId, TG_DATA_ALPHA1);
+                            arr[3] = (int) TG_GetValue(connectionId, TG_DATA_ALPHA2);
+                            arr[4] = (int) TG_GetValue(connectionId, TG_DATA_BETA1);
+                            arr[5] = (int) TG_GetValue(connectionId, TG_DATA_BETA2);
+                            arr[6] = (int) TG_GetValue(connectionId, TG_DATA_GAMMA1);
+                            arr[7] = (int) TG_GetValue(connectionId, TG_DATA_GAMMA2);
+                            break;
+                        }
+                    }
+                    result->Success(arr);
                 }
             });
+
 
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 

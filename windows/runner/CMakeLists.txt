@@ -40,8 +40,9 @@ target_link_libraries(${BINARY_NAME} PRIVATE "dwmapi.lib")
 target_include_directories(${BINARY_NAME} PRIVATE "${CMAKE_SOURCE_DIR}")
 
 target_link_libraries(${BINARY_NAME} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/thinkgear64.lib")
-
-install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/thinkgear64.dll" DESTINATION "${CMAKE_BINARY_DIR}")
+message(${CMAKE_BINARY_DIR})
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/thinkgear64.dll" DESTINATION "${CMAKE_BINARY_DIR}/runner/Debug")
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/thinkgear64.dll" DESTINATION "${CMAKE_BINARY_DIR}/runner/Release")
 
 # Run the Flutter tool portions of the build. This must not be removed.
 add_dependencies(${BINARY_NAME} flutter_assemble)
