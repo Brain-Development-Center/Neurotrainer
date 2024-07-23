@@ -19,8 +19,7 @@ FlutterWindow::FlutterWindow(const flutter::DartProject& project)
 
 FlutterWindow::~FlutterWindow() {}
 
-string connected = "Connected";
-char *comPortName = "\\\\.\\COM5";
+string connected = "No connected";
 int connectionId = 0;
 
 bool FlutterWindow::OnCreate() {
@@ -34,10 +33,25 @@ bool FlutterWindow::OnCreate() {
       connected = "No connected";
   }
 
-  int err_code = TG_Connect(connectionId, comPortName, TG_BAUD_57600, TG_STREAM_PACKETS);
-
-  if (err_code < 0) {
-      connected = "No connected";
+  for (int i = 0; i < 20; i++) {
+      string comPortName = "\\\\.\\COM" + to_string(i);
+      cout << "Hello\n";
+      int err_code = TG_Connect(connectionId, comPortName.c_str(), TG_BAUD_57600, TG_STREAM_PACKETS);
+      if (err_code >= 0) {
+          time_t startTime = time(NULL);
+          bool find = false;
+          while (difftime(time(NULL), startTime) < 3) {
+              int packetsRead = TG_ReadPackets( connectionId, 1 );
+              if (packetsRead == 1) {
+                  find = true;
+                  break;
+              }
+          }
+          if (find) {
+              connected = "Connected";
+              break;
+          }
+      }
   }
 
   RECT frame = GetClientArea();
@@ -60,18 +74,20 @@ bool FlutterWindow::OnCreate() {
                     result->Success(connected);
                 } else if (call.method_name() == "getNum") {
                     vector<int> arr(8, 0);
-                    while (true) {
-                        int packetsRead = TG_ReadPackets( connectionId, 1 );
-                        if (packetsRead == 1 ) {
-                            arr[0] = (int) TG_GetValue(connectionId, TG_DATA_DELTA);
-                            arr[1] = (int) TG_GetValue(connectionId, TG_DATA_THETA);
-                            arr[2] = (int) TG_GetValue(connectionId, TG_DATA_ALPHA1);
-                            arr[3] = (int) TG_GetValue(connectionId, TG_DATA_ALPHA2);
-                            arr[4] = (int) TG_GetValue(connectionId, TG_DATA_BETA1);
-                            arr[5] = (int) TG_GetValue(connectionId, TG_DATA_BETA2);
-                            arr[6] = (int) TG_GetValue(connectionId, TG_DATA_GAMMA1);
-                            arr[7] = (int) TG_GetValue(connectionId, TG_DATA_GAMMA2);
-                            break;
+                    if (connected == "Connected") {
+                        while (true) {
+                            int packetsRead = TG_ReadPackets( connectionId, 1 );
+                            if (packetsRead == 1 ) {
+                                arr[0] = (int) TG_GetValue(connectionId, TG_DATA_DELTA);
+                                arr[1] = (int) TG_GetValue(connectionId, TG_DATA_THETA);
+                                arr[2] = (int) TG_GetValue(connectionId, TG_DATA_ALPHA1);
+                                arr[3] = (int) TG_GetValue(connectionId, TG_DATA_ALPHA2);
+                                arr[4] = (int) TG_GetValue(connectionId, TG_DATA_BETA1);
+                                arr[5] = (int) TG_GetValue(connectionId, TG_DATA_BETA2);
+                                arr[6] = (int) TG_GetValue(connectionId, TG_DATA_GAMMA1);
+                                arr[7] = (int) TG_GetValue(connectionId, TG_DATA_GAMMA2);
+                                break;
+                            }
                         }
                     }
                     result->Success(arr);
