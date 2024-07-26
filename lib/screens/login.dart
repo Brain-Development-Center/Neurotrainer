@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -62,13 +63,14 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SvgPicture.asset('assets/login_logo.svg', fit: BoxFit.cover, height: height * 0.45,),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.05),
+            margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.15),
             child: TextField(
               keyboardType: TextInputType.emailAddress,
               cursorColor: Colors.white,
               style: GoogleFonts.jost(color: Colors.white),
               controller: emailController,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                 hintText: 'Логин',
                 hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
                 filled: true,
@@ -93,6 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                 hintText: 'Пароль',
                 hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
                 filled: true,
@@ -112,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
             width: width * 0.2,
             margin: EdgeInsets.only(top: height * 0.02),
             child: ElevatedButton(
-              child: Text('Далее', style: GoogleFonts.jost(color: Colors.white),),
+              child: Text('Далее', style: GoogleFonts.jost(color: Colors.white, fontSize: 22),),
               onPressed: () {
                 signIn();
               },
