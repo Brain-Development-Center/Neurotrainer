@@ -1,27 +1,30 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:neurotrainer/screens/home.dart';
 import 'package:neurotrainer/screens/login.dart';
-import 'firebase_options.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 void main() async {
 
+  WidgetsFlutterBinding.ensureInitialized();
+
   bool isSign = false;
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(
+      encryptedSharedPreferences: true
   );
-  // FirebaseAuth.instance.authStateChanges().listen((User? user) {
-  //   if (user != null) {
-  //     isSign = true;
-  //   }
-  // });
+
+  final storage = new FlutterSecureStorage(aOptions: _getAndroidOptions());
+
+  String? access_token = await storage.read(key: "access_token", aOptions: _getAndroidOptions());
+
+  if (access_token!.isNotEmpty) {
+    isSign = true;
+  }
+
   runApp(
     MaterialApp(
-      home: LoginScreen(),
+      home: isSign ? HomeScreen() : LoginScreen(),
       debugShowCheckedModeBanner: true,
     )
   );

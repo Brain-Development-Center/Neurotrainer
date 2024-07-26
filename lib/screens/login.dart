@@ -1,11 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -17,12 +18,34 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-  static const platform = MethodChannel('com.bdc.neurotrainer/data');
-
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   void signIn() async {
+    print(emailController.text);
+    print(passwordController.text);
+    final response = await http.post(
+      Uri.parse('https://rest-cbd.tusion.xyz/v1/user/login'),
+      headers: <String, String> {
+        'Content-Type': 'application/json; charset=UTF-8'
+      },
+      body: jsonEncode(<String, dynamic> {
+        'email': emailController.text,
+        'password': passwordController.text
+      })
+    );
+    final responseData = jsonDecode(response.body);
+    print(responseData);
+    if (responseData['code'] == 0) {
+      AndroidOptions _getAndroidOptions() => const AndroidOptions(
+          encryptedSharedPreferences: true
+      );
+      final storage = new FlutterSecureStorage(aOptions: _getAndroidOptions());
+      await storage.write(key: 'access_token', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Не удалось войти в аккаунт. Проверьте данные')));
+    }
   }
 
 
@@ -90,7 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
             margin: EdgeInsets.only(top: height * 0.02),
             child: ElevatedButton(
               child: Text('Далее', style: GoogleFonts.jost(color: Colors.white),),
-              onPressed: () {},
+              onPressed: () {
+                signIn();
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0XFF2D3E48),
               ),
