@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/svg.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -21,36 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   void signIn() async {
-    try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text
-      );
-      final db = FirebaseFirestore.instance;
-      String organization = '';
-      await db.collection('users').doc(credential.user!.uid).get().then((snapshot) {
-        organization = snapshot.data()!['organization'];
-      });
-      int? activations;
-      bool isActivate = false;
-      await db.collection('organizations').doc(organization).get().then((snapshot) {
-        activations = snapshot.data()!['activations'];
-      });
-      await db.collection('organizations').doc(organization).collection('users').doc(credential.user!.uid).get().then((snapshot) {
-        isActivate = snapshot.data()!['activate'];
-      });
-      if (activations == 0) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Уже активировано максимальное количество устройств в этой организации')));
-      } else if (isActivate) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Данный аккаунт уже активирован')));
-      } else {
-        await db.collection('organizations').doc(organization).set({'activations': activations! - 1});
-        await db.collection('organizations').doc(organization).collection('users').doc(credential.user!.uid).set({'activate': true});
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(user: credential.user)));
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 
 
@@ -62,59 +34,79 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset("assets/logo.png", height: height * 0.4,),
           Container(
-            margin: EdgeInsets.only(left: width * 0.2, right: width * 0.2),
+            alignment: Alignment.topLeft,
+            child: SvgPicture.asset('assets/login_logo.svg', fit: BoxFit.cover, height: height * 0.45,),
+          ),
+          Container(
+            margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.05),
             child: TextField(
+              keyboardType: TextInputType.emailAddress,
+              cursorColor: Colors.white,
+              style: GoogleFonts.jost(color: Colors.white),
               controller: emailController,
               decoration: InputDecoration(
                 hintText: 'Логин',
-                prefixIcon: Icon(Icons.email),
+                hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
                 filled: true,
-                fillColor: Color(0xFFedf0f8),
+                fillColor: Color(0XFF86B0CB),
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(30)
+                  borderRadius: BorderRadius.circular(30),
                 ),
                 focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide.none,
                     borderRadius: BorderRadius.circular(30)
-                )
+                ),
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.2, right: width * 0.2, top: height * 0.02),
+            margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
             child: TextField(
+              keyboardType: TextInputType.visiblePassword,
+              cursorColor: Colors.white,
+              style: GoogleFonts.jost(color: Colors.white),
               controller: passwordController,
+              obscureText: true,
               decoration: InputDecoration(
-                  hintText: 'Пароль',
-                  prefixIcon: Icon(Icons.email),
-                  filled: true,
-                  fillColor: Color(0xFFedf0f8),
-                  enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(30)
-                  )
+                hintText: 'Пароль',
+                hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                filled: true,
+                fillColor: Color(0XFF86B0CB),
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(30)
+                ),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide.none,
+                    borderRadius: BorderRadius.circular(30)
+                ),
               ),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.2, right: width * 0.2),
+            width: width * 0.2,
+            margin: EdgeInsets.only(top: height * 0.02),
             child: ElevatedButton(
-              onPressed: () {
-                signIn();
-              },
+              child: Text('Далее', style: GoogleFonts.jost(color: Colors.white),),
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black
+                backgroundColor: Color(0XFF2D3E48),
               ),
-              child: Text('Войти', style: TextStyle(color: Colors.white),),
             ),
           ),
+          Expanded(
+            child: Container(
+              width: width,
+              margin: EdgeInsets.only(top: height * 0.05),
+              decoration: BoxDecoration(
+                color: Color(0xFF367CA9),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))
+              ),
+              child: SvgPicture.asset('assets/login_bottom_logo.svg', fit: BoxFit.fitHeight, alignment: Alignment.topRight,)
+            ),
+          )
         ],
       ),
     );
