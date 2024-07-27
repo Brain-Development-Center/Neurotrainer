@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:neurotrainer/screens/home.dart';
 import 'package:neurotrainer/screens/login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:neurotrainer/screens/select_mode.dart';
 
 
 void main() async {
@@ -24,7 +25,7 @@ void main() async {
 
   runApp(
     MaterialApp(
-      home: isSign ? HomeScreen() : LoginScreen(),
+      home: isSign ? SelectModeScreen() : LoginScreen(),
       debugShowCheckedModeBanner: true,
     )
   );
