@@ -31,7 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
     values = await storage.readAll(aOptions: _getAndroidOptions());
-    isLoaded = true;
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   @override

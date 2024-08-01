@@ -42,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
     await storage.write(key: 'password', value: passwordController.text, aOptions: _getAndroidOptions());
     if (responseData['code'] == 0) {
       await storage.write(key: 'accessToken', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
+      await storage.write(key: 'refreshToken', value: responseData['result']['refresh_token'], aOptions: _getAndroidOptions());
       final franchiseeResponse = await http.get(
         Uri.parse('https://rest-cbd.tusion.xyz/v1/user'),
         headers: <String, String> {

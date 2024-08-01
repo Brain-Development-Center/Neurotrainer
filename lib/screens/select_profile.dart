@@ -44,7 +44,9 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
       };
       people.add(person);
     });
-    isLoaded = true;
+    setState(() {
+      isLoaded = true;
+    });
   }
 
   int selectedProfile = -1;

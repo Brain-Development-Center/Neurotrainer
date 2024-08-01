@@ -16,6 +16,9 @@ class TrainingsScreen extends StatefulWidget {
 class _TrainingsScreenState extends State<TrainingsScreen> {
 
   List<String> trainings = [];
+  Map<String, int> ids = {};
+
+  bool isLoaded = false;
 
   @override
   void initState() {
@@ -40,8 +43,19 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
       updateAccessToken();
       getTrainings();
     } else {
-      print(trainingsResponse.body);
+      final data = jsonDecode(trainingsResponse.body)['result'] as List<dynamic>;
+      print(data.length);
+      data.forEach((training) {
+        print(training);
+        if (training['isAvailable'] == true) {
+          trainings.add(training['name']);
+          ids[training['name']] = training['id'];
+        }
+      });
     }
+    setState(() {
+      isLoaded = true;
+    });
   }
 
 
@@ -52,18 +66,17 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
     final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
     Map<String, String> allValues = await storage.readAll(aOptions: _getAndroidOptions());
     final response = await http.post(
-        Uri.parse('https://rest-cbd.tusion.xyz/v1/user/login'),
+        Uri.parse('https://rest-cbd.tusion.xyz/v1/auth/refresh'),
         headers: <String, String> {
-          'Content-Type': 'application/json; charset=UTF-8'
+          'Content-Type': 'application/json; charset=UTF-8',
+          'access': allValues['accessToken']!,
+          'refresh_token': allValues['refreshToken']!
         },
-        body: jsonEncode(<String, dynamic> {
-          'email': allValues['email'],
-          'password': allValues['password'],
-        })
     );
     final responseData = jsonDecode(response.body);
     print(responseData);
     await storage.write(key: 'accessToken', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
+    await storage.write(key: 'refreshToken', value: responseData['result']['refresh_token'], aOptions: _getAndroidOptions());
   }
 
   @override
@@ -103,7 +116,62 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: height * 0.05, left: width * 0.1),
-                      child: Text('Выбрать тренинг', style: GoogleFonts.jost(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
+                      child: Text('Выбрать тренинг', style: GoogleFonts.jost(color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),),
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: height * 0.35,
+                          width: width * 0.4,
+                          margin: EdgeInsets.only(left: width * 0.1),
+                          child: ListView.builder(
+                            itemCount: trainings.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 14, bottom: 14, left: width * 0.02),
+                                  margin: EdgeInsets.only(bottom: height * 0.01),
+                                  child: Text(trainings[index], style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFFDBE7EF),
+                                      borderRadius: BorderRadius.only(topLeft: index == 0 ? Radius.circular(30) : Radius.circular(0), topRight: index == 0 ? Radius.circular(30) : Radius.circular(0))
+                                  ),
+                                ),
+                                onTap: () {},
+                              );
+                            },
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: width * 0.02, top: height * 0.04),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                child: Container(
+                                  child: Icon(Icons.sort_by_alpha, color: Colors.white, size: 48,),
+                                  padding: EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF86B0CB)
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    trainings.sort();
+                                  });
+                                },
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: height * 0.01),
+                                child: Text('Упорядочить по названию', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
                     )
                   ],
                 ),
