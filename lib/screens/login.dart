@@ -38,6 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
         encryptedSharedPreferences: true
     );
     final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
+    await storage.write(key: 'email', value: emailController.text, aOptions: _getAndroidOptions());
+    await storage.write(key: 'password', value: passwordController.text, aOptions: _getAndroidOptions());
     if (responseData['code'] == 0) {
       await storage.write(key: 'accessToken', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
       final franchiseeResponse = await http.get(
