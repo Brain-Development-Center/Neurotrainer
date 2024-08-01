@@ -46,7 +46,6 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
       final data = jsonDecode(trainingsResponse.body)['result'] as List<dynamic>;
       print(data.length);
       data.forEach((training) {
-        print(training);
         if (training['isAvailable'] == true) {
           trainings.add(training['name']);
           ids[training['name']] = training['id'];
@@ -67,17 +66,21 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
     Map<String, String> allValues = await storage.readAll(aOptions: _getAndroidOptions());
     final response = await http.post(
         Uri.parse('https://rest-cbd.tusion.xyz/v1/auth/refresh'),
-        headers: <String, String> {
+        headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'access': allValues['accessToken']!,
-          'refresh_token': allValues['refreshToken']!
         },
+        body: jsonEncode(<String, String> {
+          'access': allValues['accessToken'].toString(),
+          'refresh': allValues['refreshToken'].toString()
+        }),
     );
     final responseData = jsonDecode(response.body);
-    print(responseData);
     await storage.write(key: 'accessToken', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
     await storage.write(key: 'refreshToken', value: responseData['result']['refresh_token'], aOptions: _getAndroidOptions());
   }
+
+  int selected_type = -1;
+  int selected_training = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +128,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                           height: height * 0.35,
                           width: width * 0.4,
                           margin: EdgeInsets.only(left: width * 0.1),
-                          child: ListView.builder(
+                          child: isLoaded ? ListView.builder(
                             itemCount: trainings.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
@@ -134,14 +137,24 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                   margin: EdgeInsets.only(bottom: height * 0.01),
                                   child: Text(trainings[index], style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
                                   decoration: BoxDecoration(
-                                      color: Color(0xFFDBE7EF),
-                                      borderRadius: BorderRadius.only(topLeft: index == 0 ? Radius.circular(30) : Radius.circular(0), topRight: index == 0 ? Radius.circular(30) : Radius.circular(0))
+                                    color: selected_training == index ? Color(0xFF86B0CB) : Color(0xFFDBE7EF),
+                                    borderRadius: BorderRadius.only(topLeft: index == 0 ? Radius.circular(30) : Radius.circular(0), topRight: index == 0 ? Radius.circular(30) : Radius.circular(0)),
                                   ),
                                 ),
-                                onTap: () {},
+                                onTap: () {
+                                  setState(() {
+                                    if (selected_training == index) {
+                                      selected_training = -1;
+                                    } else {
+                                      selected_training = index;
+                                    }
+                                  });
+                                },
                               );
                             },
-                          ),
+                          ) : Center(
+                            child: CircularProgressIndicator(color: Color(0xFFDBE7EF)),
+                          )
                         ),
                         Container(
                           margin: EdgeInsets.only(left: width * 0.02, top: height * 0.04),
@@ -149,20 +162,16 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              GestureDetector(
-                                child: Container(
-                                  child: Icon(Icons.sort_by_alpha, color: Colors.white, size: 48,),
-                                  padding: EdgeInsets.all(6),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xFF86B0CB)
-                                  ),
-                                ),
-                                onTap: () {
+                              IconButton(
+                                onPressed: () {
                                   setState(() {
                                     trainings.sort();
                                   });
                                 },
+                                style: IconButton.styleFrom(
+                                  backgroundColor: Color(0xFF86B0CB)
+                                ),
+                                icon: Icon(Icons.sort_by_alpha, color: Colors.white, size: 48,),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: height * 0.01),
@@ -170,9 +179,154 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                               )
                             ],
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(left: width * 0.1, top: height * 0.05),
+                          child: Text('Выбор режима:', style: GoogleFonts.jost(color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),),
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(top: height * 0.05, right: width * 0.2),
+                          child: Column(
+                            children: [
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    child: Container(
+                                      child: SvgPicture.asset('assets/trainings_1.svg', width: width * 0.1,),
+                                      decoration: BoxDecoration(
+                                          color: selected_type == 0 ? Colors.grey : Color(0xFFABABAB),
+                                          shape: BoxShape.circle
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        selected_type = 0;
+                                      });
+                                    },
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      child: SvgPicture.asset('assets/trainings_2.svg', width: width * 0.1,),
+                                      decoration: BoxDecoration(
+                                          color: selected_type == 1 ? Colors.grey : Color(0xFFABABAB),
+                                          shape: BoxShape.circle
+                                      ),
+                                      margin: EdgeInsets.only(left: width * 0.02),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        selected_type = 1;
+                                      });
+                                    }
+                                  )
+                                ],
+                              ),
+                              GestureDetector(
+                                child: Container(
+                                  child: SvgPicture.asset('assets/trainings_3.svg', width: width * 0.1,),
+                                  decoration: BoxDecoration(
+                                      color: selected_type == 2 ? Colors.grey : Color(0xFFABABAB),
+                                      shape: BoxShape.circle
+                                  ),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    selected_type = 2;
+                                  });
+                                }
+                              ),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: height * 0.02),
+                                      width: width * 0.1,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: width * 0.07,
+                                            height: width * 0.07,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFDBE7EF)
+                                            ),
+                                          ),
+                                          Text('Классика', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {},
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: height * 0.02),
+                                      width: width * 0.1,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: width * 0.07,
+                                            height: width * 0.07,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFF86BCC1)
+                                            ),
+                                          ),
+                                          Text('70%', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {},
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: height * 0.02),
+                                      width: width * 0.1,
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: width * 0.07,
+                                            height: width * 0.07,
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: Color(0xFFC18686)
+                                            ),
+                                          ),
+                                          Text('PRO', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {},
+                                  )
+                                ],
+                              )
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                          ),
+                        ),
+                      ],
+                    ),
+                   Expanded(
+                     child: Container(
+                       margin: EdgeInsets.only(left: width * 0.1, bottom: height * 0.05),
+                       alignment: Alignment.bottomLeft,
+                       child: ElevatedButton(
+                         child: Text('Начать тренировку', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
+                         style: ElevatedButton.styleFrom(
+                           backgroundColor: Color(0xFF5E96BA),
+                         ),
+                         onPressed: () {
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingsScreen()));
+                         },
+                       ),
+                     ),
+                   )
                   ],
                 ),
               )
