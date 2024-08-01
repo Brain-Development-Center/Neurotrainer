@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:neurotrainer/screens/select_mode.dart';
 import 'home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,8 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   void signIn() async {
-    print(emailController.text);
-    print(passwordController.text);
     final response = await http.post(
       Uri.parse('https://rest-cbd.tusion.xyz/v1/user/login'),
       headers: <String, String> {
@@ -35,14 +34,22 @@ class _LoginScreenState extends State<LoginScreen> {
       })
     );
     final responseData = jsonDecode(response.body);
-    print(responseData);
+    AndroidOptions _getAndroidOptions() => const AndroidOptions(
+        encryptedSharedPreferences: true
+    );
+    final storage = FlutterSecureStorage(aOptions: _getAndroidOptions());
     if (responseData['code'] == 0) {
-      AndroidOptions _getAndroidOptions() => const AndroidOptions(
-          encryptedSharedPreferences: true
+      await storage.write(key: 'accessToken', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
+      final franchiseeResponse = await http.get(
+        Uri.parse('https://rest-cbd.tusion.xyz/v1/user'),
+        headers: <String, String> {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'Authorization': 'Bearer ' + responseData['result']['access_token']
+        },
       );
-      final storage = new FlutterSecureStorage(aOptions: _getAndroidOptions());
-      await storage.write(key: 'access_token', value: responseData['result']['access_token'], aOptions: _getAndroidOptions());
-      Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen()));
+      final franchiseeResponseData = jsonDecode(franchiseeResponse.body);
+      await storage.write(key: 'franchisee', value: franchiseeResponseData['result']['franchiseeId'].toString(), aOptions: _getAndroidOptions());
+      Navigator.of(context).push(MaterialPageRoute(builder: (context) => SelectModeScreen()));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Не удалось войти в аккаунт. Проверьте данные')));
     }

@@ -73,6 +73,7 @@ flutter:
     - assets/select_mode_2.svg
     - assets/select_mode_3.svg
     - assets/select_mode_4.svg
+    - assets/select_profile.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

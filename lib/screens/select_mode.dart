@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:neurotrainer/screens/create_profile.dart';
 
 
 class SelectModeScreen extends StatefulWidget {
@@ -86,7 +87,9 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                             backgroundColor: Color(0xFF367CA9),
                             padding: EdgeInsets.only(top: 16, bottom: 16, left: 16)
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateProfileScreen()));
+                        },
                       ),
                     ),
                     Container(
