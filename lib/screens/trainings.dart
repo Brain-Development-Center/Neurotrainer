@@ -5,6 +5,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:neurotrainer/screens/training_video.dart';
+
 
 class TrainingsScreen extends StatefulWidget {
 
@@ -44,7 +46,6 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
       getTrainings();
     } else {
       final data = jsonDecode(trainingsResponse.body)['result'] as List<dynamic>;
-      print(data.length);
       data.forEach((training) {
         if (training['isAvailable'] == true) {
           trainings.add(training['name']);
@@ -322,7 +323,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                            backgroundColor: Color(0xFF5E96BA),
                          ),
                          onPressed: () {
-                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingsScreen()));
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingVideoScreen()));
                          },
                        ),
                      ),

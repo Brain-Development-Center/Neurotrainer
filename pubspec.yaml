@@ -42,6 +42,10 @@ dependencies:
   flutter_svg: ^2.0.10+1
   http: ^1.2.2
   flutter_secure_storage: ^9.2.2
+  syncfusion_flutter_charts: ^26.2.7
+  video_player: ^2.9.1
+  image_picker: ^1.1.2
+  youtube_player_flutter: ^9.0.1
 
 dev_dependencies:
   flutter_test:
@@ -77,6 +81,7 @@ flutter:
     - assets/trainings_1.svg
     - assets/trainings_2.svg
     - assets/trainings_3.svg
+    - assets/youtube.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
