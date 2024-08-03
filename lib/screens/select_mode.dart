@@ -62,7 +62,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                       child: SvgPicture.asset('assets/select_mode_4.svg', width: width * 0.2,),
                     ),
                     Container(
-                      width: width * 0.5,
+                      width: width * 0.7,
                       margin: EdgeInsets.only(top: height * 0.05),
                       child: ElevatedButton(
                         child: Align(
@@ -77,7 +77,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                       ),
                     ),
                     Container(
-                      width: width * 0.5,
+                      width: width * 0.7,
                       margin: EdgeInsets.only(top: height * 0.03),
                       child: ElevatedButton(
                         child: Align(
@@ -94,7 +94,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                       ),
                     ),
                     Container(
-                      width: width * 0.5,
+                      width: width * 0.7,
                       margin: EdgeInsets.only(top: height * 0.03),
                       child: ElevatedButton(
                         child: Align(

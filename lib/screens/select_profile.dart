@@ -137,14 +137,14 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
                     ),
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(top: height * 0.1, left: width * 0.2),
+                      margin: EdgeInsets.only(top: height * 0.1, left: width * 0.1),
                       child: Text('Выбор профиля:', style: GoogleFonts.jost(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: height * 0.02, left: width * 0.3),
+                          margin: EdgeInsets.only(top: height * 0.02),
                           child: ElevatedButton(
                             child: Text('Ребенок', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
                             style: ElevatedButton.styleFrom(
@@ -158,7 +158,7 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: height * 0.02, right: width * 0.3),
+                          margin: EdgeInsets.only(top: height * 0.02, left: width * 0.05),
                           child: ElevatedButton(
                             child: Text('Взрослый', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
                             style: ElevatedButton.styleFrom(
@@ -174,15 +174,15 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(top: height * 0.1, left: width * 0.2),
+                          margin: EdgeInsets.only(top: height * 0.1, left: width * 0.1),
                           child: Text('Список профилей:', style: GoogleFonts.jost(color: Colors.black, fontSize: 18, fontWeight: FontWeight.normal),),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: height * 0.1, right: width * 0.3),
+                          margin: EdgeInsets.only(top: height * 0.1, left: width * 0.05),
                           child: ElevatedButton(
                             child: Text('Поиск', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
                             style: ElevatedButton.styleFrom(
@@ -194,10 +194,10 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: height * 0.01, left: width * 0.2),
+                      margin: EdgeInsets.only(top: height * 0.01, left: width * 0.1),
                       color: Color(0xFFDBE7EF),
                       height: height * 0.25,
-                      width: width * 0.5,
+                      width: width * 0.7,
                       child: isLoaded ? ListView.builder(
                         itemCount: people.length,
                         itemBuilder: (context, index) {
@@ -227,7 +227,7 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
                       )
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Container(
                           margin: EdgeInsets.only(top: height * 0.02, left: width * 0.2),
@@ -242,7 +242,7 @@ class _SelectProfileScreenState extends State<SelectProfileScreen> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: height * 0.02, right: width * 0.3),
+                          margin: EdgeInsets.only(top: height * 0.02, left: width * 0.05),
                           child: ElevatedButton(
                             child: Text('Выбрать', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
                             style: ElevatedButton.styleFrom(

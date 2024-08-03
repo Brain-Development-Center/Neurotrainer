@@ -111,12 +111,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 child: Column(
                   children: [
                    Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     mainAxisAlignment: MainAxisAlignment.center,
                      children: [
                        Container(
-                         margin: EdgeInsets.only(top: height * 0.2, left: width * 0.25),
+                         margin: EdgeInsets.only(top: height * 0.15),
                          child: ElevatedButton(
-                           child: Text('Ребенок', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
+                           child: Text('Ребенок', style: GoogleFonts.jost(color: Colors.white, fontSize: 12),),
                            style: ElevatedButton.styleFrom(
                              backgroundColor: type == 0 ? Color(0xFF367CA9) : Color(0xFF86B0CB),
                            ),
@@ -128,9 +128,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                          ),
                        ),
                        Container(
-                         margin: EdgeInsets.only(top: height * 0.2, right: width * 0.25),
+                         margin: EdgeInsets.only(top: height * 0.15, left: width * 0.05),
                          child: ElevatedButton(
-                           child: Text('Взрослый', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
+                           child: Text('Взрослый', style: GoogleFonts.jost(color: Colors.white, fontSize: 12),),
                            style: ElevatedButton.styleFrom(
                                backgroundColor: type == 1 ? Color(0xFF367CA9) : Color(0xFF86B0CB),
                            ),
@@ -144,7 +144,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                      ],
                    ),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.02),
                       child: TextField(
                         controller: nameController,
                         keyboardType: TextInputType.name,
@@ -153,7 +153,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Имя ребенка' : 'Имя',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -168,7 +168,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: surnameController,
                         keyboardType: TextInputType.text,
@@ -177,7 +177,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Фамилия ребенка' : 'Фамилия',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -193,7 +193,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                     type == 0 ?
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: parentNameController,
                         keyboardType: TextInputType.text,
@@ -202,7 +202,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: 'Имя родителя',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -217,7 +217,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ) : Container(),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: birthdayController,
                         keyboardType: TextInputType.datetime,
@@ -226,7 +226,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Дата рождения ребенка' : 'Дата рождения',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -241,7 +241,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: phoneController,
                         keyboardType: TextInputType.visiblePassword,
@@ -250,7 +250,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: 'Телефон',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -265,7 +265,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: emailController,
                         keyboardType: TextInputType.text,
@@ -274,7 +274,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: 'Почта',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -289,7 +289,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: queryController,
                         keyboardType: TextInputType.text,
@@ -298,7 +298,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Жалобы/причина визита' : 'Запрос',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -313,16 +313,16 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+                      margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.01),
                       child: TextField(
                         controller: notesController,
                         cursorColor: Colors.white,
                         style: GoogleFonts.jost(color: Colors.white),
-                        maxLines: 5,
+                        maxLines: 2,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12, right: width * 0.03),
                           hintText: 'Дополнительные заметки и комментарии',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -337,13 +337,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                     ),
                     Container(
-                      width: width * 0.3,
                       margin: EdgeInsets.only(top: height * 0.02),
                       child: ElevatedButton(
-                        child: Text('Создать', style: GoogleFonts.jost(color: Colors.white, fontSize: 24)),
+                        child: Text('Создать', style: GoogleFonts.jost(color: Colors.white, fontSize: 20)),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFF5E96BA),
-                          padding: EdgeInsets.only(top: 16, bottom: 16)
+                          padding: EdgeInsets.only(top: 10, bottom: 10, left: 24, right: 24)
                         ),
                         onPressed: () {
                           signUp();

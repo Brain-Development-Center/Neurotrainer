@@ -88,57 +88,48 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Text('Информация о пройденных занятих', style: GoogleFonts.jost(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
                     ),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.only(top: height * 0.005),
-                          height: height * 0.05,
-                          width: width * 0.1,
-                          margin: EdgeInsets.only(left: width * 0.1, top: height * 0.01),
+                          padding: EdgeInsets.only(bottom: 28, top: 14, right: 8),
                           child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Text('Занятие', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),),
+                            alignment: Alignment.topRight,
+                            child: Text('Занятие', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
                           ),
                         ),
                         Container(
-                          width: width * 0.65,
-                          height: height * 0.05,
                           color: Color(0xFFDBE7EF),
+                          padding: EdgeInsets.only(bottom: 28, top: 14),
                           child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                height: height * 0.05,
-                                width: width * 0.15,
+                                width: width * 0.18,
                                 child: Align(
                                   alignment: Alignment.topCenter,
-                                  child: Text('День', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),),
+                                  child: Text('День', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                height: height * 0.05,
-                                width: width * 0.15,
+                                width: width * 0.18,
                                 child: Align(
                                   alignment: Alignment.topCenter,
-                                  child: Text('Режим', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),),
+                                  child: Text('Режим', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                height: height * 0.05,
-                                width: width * 0.15,
+                                width: width * 0.18,
                                 child: Align(
                                   alignment: Alignment.topCenter,
-                                  child: Text('Оценка', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),),
+                                  child: Text('Оценка', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                height: height * 0.05,
-                                width: width * 0.15,
+                                width: width * 0.18,
                                 child: Align(
                                   alignment: Alignment.topCenter,
-                                  child: Text('Лучшее время', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.normal),),
+                                  child: Text('Лучшее время', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
                                 ),
                               ),
                             ],

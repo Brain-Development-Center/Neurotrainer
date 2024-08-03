@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SvgPicture.asset('assets/login_logo.svg', fit: BoxFit.cover, height: height * 0.45,),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.15),
+            margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.15),
             child: TextField(
               keyboardType: TextInputType.emailAddress,
               cursorColor: Colors.white,
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.25, right: width * 0.25, top: height * 0.02),
+            margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.02),
             child: TextField(
               keyboardType: TextInputType.visiblePassword,
               cursorColor: Colors.white,
@@ -122,7 +122,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Container(
-            width: width * 0.2,
             margin: EdgeInsets.only(top: height * 0.02),
             child: ElevatedButton(
               child: Text('Далее', style: GoogleFonts.jost(color: Colors.white, fontSize: 22),),

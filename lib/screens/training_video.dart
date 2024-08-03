@@ -23,7 +23,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
   void getVideo() async {
     final XFile? pickedFile = await ImagePicker().pickVideo(source: ImageSource.gallery);
     File file = File(pickedFile!.path);
-    videoPlayerController = VideoPlayerController.contentUri(file.uri);
+    videoPlayerController = VideoPlayerController.file(file);
     videoPlayerController.initialize();
     setState(() {
       type = 0;
@@ -48,10 +48,10 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.perm_media_outlined, size: 60, color: Colors.black,),
+                      icon: Icon(Icons.perm_media_outlined, size: width * 0.05, color: Colors.black,),
                       style: IconButton.styleFrom(
                           backgroundColor: Colors.white,
-                          padding: EdgeInsets.all(20)
+                          padding: EdgeInsets.all(width * 0.02)
                       ),
                       onPressed: () {
                         getVideo();
@@ -60,7 +60,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                     GestureDetector(
                       child: Container(
                         margin: EdgeInsets.only(left: width * 0.05),
-                        child: SvgPicture.asset('assets/youtube.svg', width: 100,),
+                        child: SvgPicture.asset('assets/youtube.svg', width: width * 0.09,),
                       ),
                       onTap: () {},
                     )

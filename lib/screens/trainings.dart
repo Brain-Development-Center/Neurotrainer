@@ -127,7 +127,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                       children: [
                         Container(
                           height: height * 0.35,
-                          width: width * 0.4,
+                          width: width * 0.5,
                           margin: EdgeInsets.only(left: width * 0.1),
                           child: isLoaded ? ListView.builder(
                             itemCount: trainings.length,
@@ -172,11 +172,12 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                 style: IconButton.styleFrom(
                                   backgroundColor: Color(0xFF86B0CB)
                                 ),
-                                icon: Icon(Icons.sort_by_alpha, color: Colors.white, size: 48,),
+                                icon: Icon(Icons.sort_by_alpha, color: Colors.white, size: width * 0.05,),
                               ),
                               Container(
                                 margin: EdgeInsets.only(top: height * 0.01),
-                                child: Text('Упорядочить по названию', style: GoogleFonts.jost(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
+                                width: width * 0.25,
+                                child: Text('Упорядочить по названию', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold, )),
                               )
                             ],
                           ),
@@ -184,15 +185,15 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                       ],
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           margin: EdgeInsets.only(left: width * 0.1, top: height * 0.05),
-                          child: Text('Выбор режима:', style: GoogleFonts.jost(color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),),
+                          child: Text('Выбор режима:', style: GoogleFonts.jost(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: height * 0.05, right: width * 0.2),
+                          margin: EdgeInsets.only(top: height * 0.05),
                           child: Column(
                             children: [
                               Row(
@@ -242,69 +243,69 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                   });
                                 }
                               ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: height * 0.02),
-                                      width: width * 0.1,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: width * 0.07,
-                                            height: width * 0.07,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xFFDBE7EF)
+                              Container(
+                                margin: EdgeInsets.only(top: height * 0.01),
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      child: Container(
+                                        width: width * 0.1,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xFFDBE7EF)
+                                              ),
                                             ),
-                                          ),
-                                          Text('Классика', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
-                                        ],
+                                            Text('Классика', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
+                                          ],
+                                        ),
                                       ),
+                                      onTap: () {},
                                     ),
-                                    onTap: () {},
-                                  ),
-                                  GestureDetector(
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: height * 0.02),
-                                      width: width * 0.1,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: width * 0.07,
-                                            height: width * 0.07,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xFF86BCC1)
+                                    GestureDetector(
+                                      child: Container(
+                                        width: width * 0.1,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xFF86BCC1)
+                                              ),
                                             ),
-                                          ),
-                                          Text('70%', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
-                                        ],
+                                            Text('70%', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
+                                          ],
+                                        ),
                                       ),
+                                      onTap: () {},
                                     ),
-                                    onTap: () {},
-                                  ),
-                                  GestureDetector(
-                                    child: Container(
-                                      margin: EdgeInsets.only(top: height * 0.02),
-                                      width: width * 0.1,
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: width * 0.07,
-                                            height: width * 0.07,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: Color(0xFFC18686)
+                                    GestureDetector(
+                                      child: Container(
+                                        width: width * 0.1,
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              width: width * 0.07,
+                                              height: width * 0.07,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Color(0xFFC18686)
+                                              ),
                                             ),
-                                          ),
-                                          Text('PRO', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
-                                        ],
+                                            Text('PRO', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    onTap: () {},
-                                  )
-                                ],
+                                      onTap: () {},
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                             mainAxisAlignment: MainAxisAlignment.start,
