@@ -324,7 +324,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                            backgroundColor: Color(0xFF5E96BA),
                          ),
                          onPressed: () {
-                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingVideoScreen()));
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingVideoScreen(training: trainings[selected_training],)));
                          },
                        ),
                      ),

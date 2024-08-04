@@ -27,9 +27,7 @@ public class MainActivity extends FlutterActivity {
 
     private BluetoothAdapter mBluetoothAdapter;
 
-    int nums[] = new int[8];
-
-
+    int nums[] = new int[9];
 
     public String connectBluetooth() {
         String connect = "Bluetooth adapter is not working";
