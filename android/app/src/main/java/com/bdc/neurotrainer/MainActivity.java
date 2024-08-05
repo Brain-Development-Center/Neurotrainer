@@ -27,7 +27,8 @@ public class MainActivity extends FlutterActivity {
 
     private BluetoothAdapter mBluetoothAdapter;
 
-    int nums[] = new int[9];
+    double nums[] = new double[9];
+    double mEEGData[] = new double[10];
 
     public String connectBluetooth() {
         String connect = "Bluetooth adapter is not working";
@@ -115,7 +116,6 @@ public class MainActivity extends FlutterActivity {
             LinkDetectedHandler.sendMessage(msg);
         }
     };
-
 
     private static final int MSG_UPDATE_BAD_PACKET = 1001;
     private static final int MSG_UPDATE_STATE = 1002;

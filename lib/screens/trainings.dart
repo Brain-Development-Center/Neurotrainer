@@ -82,6 +82,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
 
   int selected_type = -1;
   int selected_training = -1;
+  int selected_mode = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -184,137 +185,179 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.only(left: width * 0.1, top: height * 0.05),
-                          child: Text('Выбор режима:', style: GoogleFonts.jost(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: height * 0.05),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    child: Container(
-                                      child: SvgPicture.asset('assets/trainings_1.svg', width: width * 0.1,),
-                                      decoration: BoxDecoration(
-                                          color: selected_type == 0 ? Colors.grey : Color(0xFFABABAB),
-                                          shape: BoxShape.circle
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      setState(() {
-                                        selected_type = 0;
-                                      });
-                                    },
+                    Container(
+                      margin: EdgeInsets.only(top: height * 0.01, left: width * 0.02, bottom: height * 0.01),
+                      child: Text('Выбор режима:', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),),
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          GestureDetector(
+                            child: Container(
+                              width: width * 0.2,
+                              height: width * 0.15,
+                              decoration: BoxDecoration(
+                                  color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),
+                                  borderRadius: BorderRadius.circular(8)
+                              ),
+                              child: Center(
+                                child: Container(
+                                  height: width * 0.12,
+                                  width: width * 0.12,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white
                                   ),
-                                  GestureDetector(
-                                    child: Container(
-                                      child: SvgPicture.asset('assets/trainings_2.svg', width: width * 0.1,),
-                                      decoration: BoxDecoration(
-                                          color: selected_type == 1 ? Colors.grey : Color(0xFFABABAB),
-                                          shape: BoxShape.circle
-                                      ),
-                                      margin: EdgeInsets.only(left: width * 0.02),
+                                  child: Center(
+                                    child: SvgPicture.asset('assets/trainings_1.svg', fit: BoxFit.cover, color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selected_type = 0;
+                              });
+                            },
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              width: width * 0.2,
+                              height: width * 0.15,
+                              margin: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
+                              decoration: BoxDecoration(
+                                  color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),
+                                  borderRadius: BorderRadius.circular(8)
+                              ),
+                              child: Center(
+                                child: Container(
+                                  height: width * 0.12,
+                                  width: width * 0.12,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white
+                                  ),
+                                  child: Center(
+                                    child: SvgPicture.asset('assets/trainings_2.svg', fit: BoxFit.cover, color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selected_type = 1;
+                              });
+                            },
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              width: width * 0.2,
+                              height: width * 0.15,
+                              decoration: BoxDecoration(
+                                  color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),
+                                  borderRadius: BorderRadius.circular(8)
+                              ),
+                              child: Center(
+                                child: Container(
+                                  height: width * 0.12,
+                                  width: width * 0.12,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white
+                                  ),
+                                  child: Center(
+                                    child: SvgPicture.asset('assets/trainings_3.svg', fit: BoxFit.cover, color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selected_type = 2;
+                              });
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: height * 0.02),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            child: Container(
+                              margin: EdgeInsets.only(left: width * 0.1),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: width * 0.06,
+                                    width: width * 0.06,
+                                    decoration: BoxDecoration(
+                                        color: selected_mode == 0 ? Color(0xFFABB9C2) : Color(0xFFDBE7EF),
+                                        shape: BoxShape.circle
                                     ),
-                                    onTap: () {
-                                      setState(() {
-                                        selected_type = 1;
-                                      });
-                                    }
-                                  )
+                                  ),
+                                  Text('Классика', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.normal),)
                                 ],
                               ),
-                              GestureDetector(
-                                child: Container(
-                                  child: SvgPicture.asset('assets/trainings_3.svg', width: width * 0.1,),
-                                  decoration: BoxDecoration(
-                                      color: selected_type == 2 ? Colors.grey : Color(0xFFABABAB),
-                                      shape: BoxShape.circle
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    selected_type = 2;
-                                  });
-                                }
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                child: Row(
-                                  children: [
-                                    GestureDetector(
-                                      child: Container(
-                                        width: width * 0.1,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: width * 0.07,
-                                              height: width * 0.07,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Color(0xFFDBE7EF)
-                                              ),
-                                            ),
-                                            Text('Классика', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () {},
-                                    ),
-                                    GestureDetector(
-                                      child: Container(
-                                        width: width * 0.1,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: width * 0.07,
-                                              height: width * 0.07,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Color(0xFF86BCC1)
-                                              ),
-                                            ),
-                                            Text('70%', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () {},
-                                    ),
-                                    GestureDetector(
-                                      child: Container(
-                                        width: width * 0.1,
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              width: width * 0.07,
-                                              height: width * 0.07,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Color(0xFFC18686)
-                                              ),
-                                            ),
-                                            Text('PRO', style: GoogleFonts.jost(color: Colors.black, fontSize: 14),)
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () {},
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selected_mode = 0;
+                              });
+                            },
                           ),
-                        ),
-                      ],
+                          GestureDetector(
+                            child: Container(
+                              margin: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: width * 0.06,
+                                    width: width * 0.06,
+                                    decoration: BoxDecoration(
+                                        color: selected_mode == 1 ? Color(0xFF77A0A4) : Color(0xFF86BCC1),
+                                        shape: BoxShape.circle
+                                    ),
+                                  ),
+                                  Text('70%', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.normal),)
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selected_mode = 1;
+                              });
+                            },
+                          ),
+                          GestureDetector(
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: width * 0.06,
+                                    width: width * 0.06,
+                                    decoration: BoxDecoration(
+                                        color: selected_mode == 2 ? Color(0xFF996C6C) : Color(0xFFC18686),
+                                        shape: BoxShape.circle
+                                    ),
+                                  ),
+                                  Text('PRO', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.normal),)
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                selected_mode = 2;
+                              });
+                            },
+                          )
+                        ],
+                      ),
                     ),
-                   Expanded(
+                    Expanded(
                      child: Container(
                        margin: EdgeInsets.only(left: width * 0.1, bottom: height * 0.05),
                        alignment: Alignment.bottomLeft,
@@ -324,7 +367,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                            backgroundColor: Color(0xFF5E96BA),
                          ),
                          onPressed: () {
-                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingVideoScreen(training: trainings[selected_training],)));
+                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingVideoScreen(training: trainings[selected_training], trainingMode: selected_mode,)));
                          },
                        ),
                      ),

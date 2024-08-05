@@ -4,27 +4,27 @@ import 'package:video_player/video_player.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:io';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:flutter/services.dart';
 
 
 class TrainingVideoScreen extends StatefulWidget {
 
   final String training;
+  final int trainingMode;
 
-  TrainingVideoScreen({Key? key, required this.training}) : super(key: key);
+  TrainingVideoScreen({Key? key, required this.training, required this.trainingMode}) : super(key: key);
 
   @override
-  _TrainingVideoScreenState createState() => _TrainingVideoScreenState(training: training);
+  _TrainingVideoScreenState createState() => _TrainingVideoScreenState(training: training, trainingMode: trainingMode);
 }
 
 
 class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
 
   final String training;
+  final int trainingMode;
 
-  _TrainingVideoScreenState({Key? key, required this.training});
+  _TrainingVideoScreenState({Key? key, required this.training, required this.trainingMode});
 
   static const platform = MethodChannel('com.bdc.neurotrainer/data');
 
@@ -41,6 +41,9 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
       type = 0;
     });
   }
+
+  double attentionSum = 0;
+  int count = 0;
 
   String text = 'None';
 
@@ -60,14 +63,20 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
 
   void getNums() async {
     while (true) {
-      List<int> t;
+      List<double> t;
       try {
-        final result = await platform.invokeMethod<List<int>>('getNum');
+        final result = await platform.invokeMethod<List<double>>('getNum');
         t = result!;
       } on PlatformException catch (e) {
         t = [];
       }
-      print(t);
+      if (attention != t[8]) {
+        attentionSum += t[8];
+        count++;
+        setState(() {
+          attention = t[8];
+        });
+      }
     }
   }
 
@@ -78,7 +87,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
     getNums();
   }
 
-  int attention = 0;
+  double attention = 0;
 
   bool isTraining = false;
 
@@ -226,52 +235,140 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
               ],
             )
           ),
-          Container(
-            alignment: Alignment.topLeft,
-            child: Text(training, style: GoogleFonts.jost(color: Color(0xFF86B0CB), fontSize: 28, fontWeight: FontWeight.bold),),
-          ),
-          Stack(
-            alignment: Alignment.bottomCenter,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                height: height * 0.2,
-                width: 8,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        colors: <Color>[
-                          Color(0xFF86B0CB),
-                          Color(0xFFC18686)
-                        ]
-                    )
-                ),
+                alignment: Alignment.topLeft,
+                margin: EdgeInsets.only(left: width * 0.05, top: height * 0.01),
+                child: Text(training, style: GoogleFonts.jost(color: Color(0xFF86B0CB), fontSize: 28, fontWeight: FontWeight.bold),),
               ),
               Container(
-                height: 28,
-                width: 28,
-                margin: EdgeInsets.only(bottom: height * 0.002 * attention),
+                padding: EdgeInsets.only(left: 16, right: 8, top: 6, bottom: 6),
                 decoration: BoxDecoration(
-                    color: Color(0xFFD9D9D9),
-                    shape: BoxShape.circle
+                  color: Color(0xFF86BCC1),
+                  borderRadius: BorderRadius.circular(26)
                 ),
-              ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset('assets/training_video_successful.svg', height: height * 0.015,),
+                    Container(
+                      margin: EdgeInsets.only(left: 8, right: 8),
+                      child: Text('Успешность', style: GoogleFonts.jost(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(26)
+                      ),
+                      child: Text('10:00', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold),),
+                    )
+                  ],
+                ),
+              )
             ],
           ),
-          Container(
-            alignment: Alignment.bottomRight,
-            child: ElevatedButton(
-              child: Text(isTraining ? 'Завершить занятие' : 'Начать занятие', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF86B0CB),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                      height: height * 0.3,
+                      width: 8,
+                      decoration: BoxDecoration(
+                          color: Color(0xFF86B0CB)
+                      )
+                  ),
+                  Container(
+                    height: 10,
+                    width: 50,
+                    margin: EdgeInsets.only(bottom: height * 0.003 * attention),
+                    decoration: BoxDecoration(
+                        color: Color(0xFF3F3F3F),
+                        borderRadius: BorderRadius.circular(8)
+                    ),
+                  ),
+                ],
               ),
-              onPressed: () {
-                setState(() {
-                  isTraining = true;
-                });
-              },
-            ),
+              trainingMode == 1 ?
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: width * 0.1,
+                          height: width * 0.08,
+                          color: Color(0xFFC18686),
+                          child: Center(
+                            child: Text('Сложно', style: GoogleFonts.jost(color: Colors.white),),
+                          ),
+                        ),
+                        Container(
+                          width: width * 0.1,
+                          height: width * 0.08,
+                          margin: EdgeInsets.only(top: height * 0.01, bottom: height * 0.01),
+                          color: Color(0xFF86BCC1),
+                          child: Center(
+                            child: Text('Средне', style: GoogleFonts.jost(color: Colors.white),),
+                          ),
+                        ),
+                        Container(
+                          width: width * 0.1,
+                          height: width * 0.08,
+                          color: Color(0xFF86B0CB),
+                          child: Center(
+                            child: Text('Легко', style: GoogleFonts.jost(color: Colors.white),),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Container(
+                          height: height * 0.2,
+                          width: 8,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF86B0CB)
+                          )
+                      ),
+                      Container(
+                        height: 10,
+                        width: 50,
+                        margin: EdgeInsets.only(bottom: height * 0.002 * attention),
+                        decoration: BoxDecoration(
+                            color: Color(0xFF3F3F3F),
+                            borderRadius: BorderRadius.circular(8)
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ) : Container()
+            ],
           ),
+          Expanded(
+            child: Container(
+              alignment: Alignment.bottomLeft,
+              child: ElevatedButton(
+                child: Text(isTraining ? 'Завершить' : 'Начать', style: GoogleFonts.jost(color: Colors.white, fontSize: 18),),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF86B0CB),
+                ),
+                onPressed: () {
+                  setState(() {
+                    isTraining = true;
+                  });
+                },
+              ),
+            ),
+          )
         ],
       ),
     );
