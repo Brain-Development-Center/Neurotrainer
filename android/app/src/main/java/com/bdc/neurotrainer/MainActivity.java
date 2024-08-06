@@ -18,6 +18,10 @@ import java.util.logging.LogRecord;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 
+import com.neurosky.connection.DataType.MindDataType.FilterType;
+
+import com.neurosky.connection.TgStreamReader.ParserType;
+
 public class MainActivity extends FlutterActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -29,6 +33,14 @@ public class MainActivity extends FlutterActivity {
 
     double nums[] = new double[9];
     double mEEGData[] = new double[10];
+    float lDelta = 0.5F;
+    float lTheta = 4.0F;
+    float lAlpha = 8.0F;
+    float lSmr = 12.0F;
+    float lBeta = 13.0F;
+    float lmBeta = 15.0F;
+    float lhBeta = 20.0F;
+    float lGamma = 30.0F;
 
     public String connectBluetooth() {
         String connect = "Bluetooth adapter is not working";

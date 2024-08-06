@@ -210,7 +210,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                       color: Colors.white
                                   ),
                                   child: Center(
-                                    child: SvgPicture.asset('assets/trainings_1.svg', fit: BoxFit.cover, color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                    child: SvgPicture.asset('assets/trainings_1.svg', width: width * 0.06, color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),),
                                   ),
                                 ),
                               ),
@@ -239,7 +239,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                       color: Colors.white
                                   ),
                                   child: Center(
-                                    child: SvgPicture.asset('assets/trainings_2.svg', fit: BoxFit.cover, color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                    child: SvgPicture.asset('assets/trainings_2.svg', width: width * 0.06, color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),),
                                   ),
                                 ),
                               ),
@@ -267,7 +267,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                       color: Colors.white
                                   ),
                                   child: Center(
-                                    child: SvgPicture.asset('assets/trainings_3.svg', fit: BoxFit.cover, color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                    child: SvgPicture.asset('assets/trainings_3.svg', width: width * 0.06, color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),),
                                   ),
                                 ),
                               ),
@@ -292,8 +292,8 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: width * 0.06,
-                                    width: width * 0.06,
+                                    height: width * 0.1,
+                                    width: width * 0.1,
                                     decoration: BoxDecoration(
                                         color: selected_mode == 0 ? Color(0xFFABB9C2) : Color(0xFFDBE7EF),
                                         shape: BoxShape.circle
@@ -315,8 +315,8 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: width * 0.06,
-                                    width: width * 0.06,
+                                    height: width * 0.1,
+                                    width: width * 0.1,
                                     decoration: BoxDecoration(
                                         color: selected_mode == 1 ? Color(0xFF77A0A4) : Color(0xFF86BCC1),
                                         shape: BoxShape.circle
@@ -337,8 +337,8 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                               child: Column(
                                 children: [
                                   Container(
-                                    height: width * 0.06,
-                                    width: width * 0.06,
+                                    height: width * 0.1,
+                                    width: width * 0.1,
                                     decoration: BoxDecoration(
                                         color: selected_mode == 2 ? Color(0xFF996C6C) : Color(0xFFC18686),
                                         shape: BoxShape.circle

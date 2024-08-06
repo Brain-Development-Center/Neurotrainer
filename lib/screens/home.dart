@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: height * 0.02, right: width * 0.15),
+                      margin: EdgeInsets.only(top: height * 0.02, right: width * 0.01),
                       alignment: Alignment.topRight,
                       child: ElevatedButton(
                         child: Text('Перейти к тренировке', style: GoogleFonts.jost(color: Colors.white, fontSize: 16),),

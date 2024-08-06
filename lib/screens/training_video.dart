@@ -70,13 +70,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
       } on PlatformException catch (e) {
         t = [];
       }
-      if (attention != t[8]) {
-        attentionSum += t[8];
-        count++;
-        setState(() {
-          attention = t[8];
-        });
-      }
+      print(t);
     }
   }
 
@@ -119,10 +113,10 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           IconButton(
-                            icon: Icon(Icons.perm_media_outlined, size: width * 0.05, color: Colors.black,),
+                            icon: Icon(Icons.perm_media_outlined, size: width * 0.08, color: Colors.black,),
                             style: IconButton.styleFrom(
                                 backgroundColor: Colors.white,
-                                padding: EdgeInsets.all(width * 0.02)
+                                padding: EdgeInsets.all(width * 0.04)
                             ),
                             onPressed: () {
                               getVideo();
@@ -131,12 +125,12 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                           GestureDetector(
                             child: Container(
                               margin: EdgeInsets.only(left: width * 0.05),
-                              child: SvgPicture.asset('assets/youtube.svg', width: width * 0.09,),
+                              child: SvgPicture.asset('assets/youtube.svg', width: width * 0.16,),
                             ),
                             onTap: () {},
                           )
                         ],
-                      ) : (type == 0 ? VideoPlayer(videoPlayerController!) : Container())
+                      ) : (type == 0 ? VideoPlayer(videoPlayerController) : Container())
                   ),
                 ),
                 (type == 0 || type == 1) ? Column(
@@ -244,25 +238,57 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                 child: Text(training, style: GoogleFonts.jost(color: Color(0xFF86B0CB), fontSize: 28, fontWeight: FontWeight.bold),),
               ),
               Container(
-                padding: EdgeInsets.only(left: 16, right: 8, top: 6, bottom: 6),
-                decoration: BoxDecoration(
-                  color: Color(0xFF86BCC1),
-                  borderRadius: BorderRadius.circular(26)
-                ),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    SvgPicture.asset('assets/training_video_successful.svg', height: height * 0.015,),
                     Container(
-                      margin: EdgeInsets.only(left: 8, right: 8),
-                      child: Text('Успешность', style: GoogleFonts.jost(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),),
+                      padding: EdgeInsets.only(left: 16, right: 8, top: 6, bottom: 6),
+                      margin: EdgeInsets.only(right: width * 0.01, top: height * 0.01),
+                      decoration: BoxDecoration(
+                          color: Color(0xFF86BCC1),
+                          borderRadius: BorderRadius.circular(26)
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset('assets/training_video_successful.svg', height: height * 0.015,),
+                          Container(
+                            margin: EdgeInsets.only(left: 8, right: 8),
+                            child: Text('Успешность', style: GoogleFonts.jost(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(26)
+                            ),
+                            child: Text('10:00', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold),),
+                          )
+                        ],
+                      ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+                      padding: EdgeInsets.only(left: 16, right: 8, top: 6, bottom: 6),
+                      margin: EdgeInsets.only(right: width * 0.01, top: height * 0.01),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(26)
+                          color: Color(0xFF86B0CB),
+                          borderRadius: BorderRadius.circular(26)
                       ),
-                      child: Text('10:00', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold),),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(left: 8, right: 8),
+                            child: Text('Успешность', style: GoogleFonts.jost(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 4, bottom: 4, left: 8, right: 8),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(26)
+                            ),
+                            child: Text('10:00', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold),),
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -301,16 +327,16 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                     child: Column(
                       children: [
                         Container(
-                          width: width * 0.1,
-                          height: width * 0.08,
+                          width: width * 0.15,
+                          height: width * 0.1,
                           color: Color(0xFFC18686),
                           child: Center(
                             child: Text('Сложно', style: GoogleFonts.jost(color: Colors.white),),
                           ),
                         ),
                         Container(
-                          width: width * 0.1,
-                          height: width * 0.08,
+                          width: width * 0.15,
+                          height: width * 0.1,
                           margin: EdgeInsets.only(top: height * 0.01, bottom: height * 0.01),
                           color: Color(0xFF86BCC1),
                           child: Center(
@@ -318,8 +344,8 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                           ),
                         ),
                         Container(
-                          width: width * 0.1,
-                          height: width * 0.08,
+                          width: width * 0.15,
+                          height: width * 0.1,
                           color: Color(0xFF86B0CB),
                           child: Center(
                             child: Text('Легко', style: GoogleFonts.jost(color: Colors.white),),
@@ -356,14 +382,16 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
           Expanded(
             child: Container(
               alignment: Alignment.bottomLeft,
+              margin: EdgeInsets.only(left: width * 0.01, bottom: height * 0.01),
               child: ElevatedButton(
-                child: Text(isTraining ? 'Завершить' : 'Начать', style: GoogleFonts.jost(color: Colors.white, fontSize: 18),),
+                child: Text(isTraining ? 'Завершить' : 'Старт', style: GoogleFonts.jost(color: Colors.white, fontSize: 18),),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xFF86B0CB),
                 ),
                 onPressed: () {
                   setState(() {
                     isTraining = true;
+                    videoPlayerController.play();
                   });
                 },
               ),
