@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neurotrainer/screens/create_profile.dart';
 import 'package:neurotrainer/screens/select_profile.dart';
+import 'package:neurotrainer/screens/trainings.dart';
 
 
 class SelectModeScreen extends StatefulWidget {
@@ -59,7 +60,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      child: SvgPicture.asset('assets/select_mode_4.svg', width: width * 0.2,),
+                      child: SvgPicture.asset('assets/select_mode_4.svg', width: width * 0.25,),
                     ),
                     Container(
                       width: width * 0.7,
@@ -73,7 +74,9 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                             backgroundColor: Color(0xFF367CA9),
                             padding: EdgeInsets.only(top: 16, bottom: 16, left: 16)
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => TrainingsScreen()));
+                        },
                       ),
                     ),
                     Container(

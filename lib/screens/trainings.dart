@@ -115,102 +115,80 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                     SafeArea(
                       child: Container(
                         alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(left: width * 0.02, top: height * 0.02),
+                        margin: EdgeInsets.only(left: width * 0.04, top: height * 0.02),
                         child: SvgPicture.asset('assets/select_mode_4.svg', width: width * 0.2,),
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: height * 0.05, left: width * 0.1),
-                      child: Text('Выбрать тренинг', style: GoogleFonts.jost(color: Colors.black, fontSize: 26, fontWeight: FontWeight.bold),),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: height * 0.35,
-                          width: width * 0.5,
-                          margin: EdgeInsets.only(left: width * 0.1),
-                          child: isLoaded ? ListView.builder(
-                            itemCount: trainings.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                child: Container(
-                                  padding: EdgeInsets.only(top: 14, bottom: 14, left: width * 0.02),
-                                  margin: EdgeInsets.only(bottom: height * 0.01),
-                                  child: Text(trainings[index], style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
-                                  decoration: BoxDecoration(
-                                    color: selected_training == index ? Color(0xFF86B0CB) : Color(0xFFDBE7EF),
-                                    borderRadius: BorderRadius.only(topLeft: index == 0 ? Radius.circular(30) : Radius.circular(0), topRight: index == 0 ? Radius.circular(30) : Radius.circular(0)),
-                                  ),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    if (selected_training == index) {
-                                      selected_training = -1;
-                                    } else {
-                                      selected_training = index;
-                                    }
-                                  });
-                                },
-                              );
-                            },
-                          ) : Center(
-                            child: CircularProgressIndicator(color: Color(0xFFDBE7EF)),
-                          )
+                      margin: EdgeInsets.only(left: width * 0.1, top: height * 0.01),
+                      child: IconButton(
+                        icon: Icon(Icons.sort_by_alpha, size: 20, color: Colors.white,),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Color(0xFF86B0CB)
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: width * 0.02, top: height * 0.04),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    trainings.sort();
-                                  });
-                                },
-                                style: IconButton.styleFrom(
-                                  backgroundColor: Color(0xFF86B0CB)
+                        onPressed: () {
+                          setState(() {
+                            trainings.sort();
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                        height: height * 0.35,
+                        width: width * 0.8,
+                        margin: EdgeInsets.only(left: width * 0.1, top: height * 0.01),
+                        child: isLoaded ? ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: trainings.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              child: Container(
+                                padding: EdgeInsets.only(top: 12, bottom: 12, left: width * 0.02),
+                                margin: EdgeInsets.only(bottom: height * 0.01),
+                                child: Text(trainings[index], style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                decoration: BoxDecoration(
+                                  color: selected_training == index ? Color(0xFF86B0CB) : Color(0xFFDBE7EF),
+                                  borderRadius: BorderRadius.only(topLeft: index == 0 ? Radius.circular(20) : Radius.circular(0), topRight: index == 0 ? Radius.circular(30) : Radius.circular(0)),
                                 ),
-                                icon: Icon(Icons.sort_by_alpha, color: Colors.white, size: width * 0.05,),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(top: height * 0.01),
-                                width: width * 0.25,
-                                child: Text('Упорядочить по названию', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.bold, )),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
+                              onTap: () {
+                                setState(() {
+                                  if (selected_training == index) {
+                                    selected_training = -1;
+                                  } else {
+                                    selected_training = index;
+                                  }
+                                });
+                              },
+                            );
+                          },
+                        ) : Center(
+                          child: CircularProgressIndicator(color: Color(0xFFDBE7EF)),
+                        )
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: height * 0.01, left: width * 0.02, bottom: height * 0.01),
-                      child: Text('Выбор режима:', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 24),),
-                    ),
-                    Container(
+                      margin: EdgeInsets.only(top: height * 0.05),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           GestureDetector(
                             child: Container(
-                              width: width * 0.2,
-                              height: width * 0.15,
+                              width: width * 0.3,
+                              height: width * 0.25,
                               decoration: BoxDecoration(
                                   color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),
                                   borderRadius: BorderRadius.circular(8)
                               ),
                               child: Center(
                                 child: Container(
-                                  height: width * 0.12,
-                                  width: width * 0.12,
+                                  height: width * 0.2,
+                                  width: width * 0.2,
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white
                                   ),
                                   child: Center(
-                                    child: SvgPicture.asset('assets/trainings_1.svg', width: width * 0.06, color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                    child: SvgPicture.asset('assets/trainings_1.svg', width: width * 0.08, color: selected_type == 0 ? Color(0xFF156499) : Color(0xFF86B0CB),),
                                   ),
                                 ),
                               ),
@@ -223,8 +201,8 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                           ),
                           GestureDetector(
                             child: Container(
-                              width: width * 0.2,
-                              height: width * 0.15,
+                              width: width * 0.3,
+                              height: width * 0.25,
                               margin: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
                               decoration: BoxDecoration(
                                   color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),
@@ -232,14 +210,14 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                               ),
                               child: Center(
                                 child: Container(
-                                  height: width * 0.12,
-                                  width: width * 0.12,
+                                  height: width * 0.2,
+                                  width: width * 0.2,
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white
                                   ),
                                   child: Center(
-                                    child: SvgPicture.asset('assets/trainings_2.svg', width: width * 0.06, color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                    child: SvgPicture.asset('assets/trainings_2.svg', width: width * 0.08, color: selected_type == 1 ? Color(0xFF156499) : Color(0xFF86B0CB),),
                                   ),
                                 ),
                               ),
@@ -252,22 +230,22 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                           ),
                           GestureDetector(
                             child: Container(
-                              width: width * 0.2,
-                              height: width * 0.15,
+                              width: width * 0.3,
+                              height: width * 0.25,
                               decoration: BoxDecoration(
                                   color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),
                                   borderRadius: BorderRadius.circular(8)
                               ),
                               child: Center(
                                 child: Container(
-                                  height: width * 0.12,
-                                  width: width * 0.12,
+                                  height: width * 0.2,
+                                  width: width * 0.2,
                                   decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       color: Colors.white
                                   ),
                                   child: Center(
-                                    child: SvgPicture.asset('assets/trainings_3.svg', width: width * 0.06, color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),),
+                                    child: SvgPicture.asset('assets/trainings_3.svg', width: width * 0.08, color: selected_type == 2 ? Color(0xFF156499) : Color(0xFF86B0CB),),
                                   ),
                                 ),
                               ),
@@ -288,19 +266,19 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                         children: [
                           GestureDetector(
                             child: Container(
-                              margin: EdgeInsets.only(left: width * 0.1),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: width * 0.1,
-                                    width: width * 0.1,
-                                    decoration: BoxDecoration(
-                                        color: selected_mode == 0 ? Color(0xFFABB9C2) : Color(0xFFDBE7EF),
-                                        shape: BoxShape.circle
-                                    ),
-                                  ),
-                                  Text('Классика', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.normal),)
-                                ],
+                              margin: EdgeInsets.only(left: width * 0.05),
+                              child: Container(
+                                child: Text('Class', style: GoogleFonts.jost(color: selected_mode == 0 ? Color(0xFF86B0CB) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                                decoration: BoxDecoration(
+                                  color: selected_mode == 0 ? Colors.white : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                              ),
+                              padding: EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
+                              decoration: BoxDecoration(
+                                color: Color(0xFF86B0CB),
+                                borderRadius: BorderRadius.circular(30)
                               ),
                             ),
                             onTap: () {
@@ -311,19 +289,19 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                           ),
                           GestureDetector(
                             child: Container(
-                              margin: EdgeInsets.only(left: width * 0.02, right: width * 0.02),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: width * 0.1,
-                                    width: width * 0.1,
-                                    decoration: BoxDecoration(
-                                        color: selected_mode == 1 ? Color(0xFF77A0A4) : Color(0xFF86BCC1),
-                                        shape: BoxShape.circle
-                                    ),
-                                  ),
-                                  Text('70%', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.normal),)
-                                ],
+                              margin: EdgeInsets.only(left: width * 0.01, right: width * 0.01),
+                              child: Container(
+                                child: Text('70%', style: GoogleFonts.jost(color: selected_mode == 1 ? Color(0xFF86BCC1) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                                decoration: BoxDecoration(
+                                    color: selected_mode == 1 ? Colors.white : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                              ),
+                              padding: EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
+                              decoration: BoxDecoration(
+                                  color: Color(0xFF86BCC1),
+                                  borderRadius: BorderRadius.circular(30)
                               ),
                             ),
                             onTap: () {
@@ -334,18 +312,18 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                           ),
                           GestureDetector(
                             child: Container(
-                              child: Column(
-                                children: [
-                                  Container(
-                                    height: width * 0.1,
-                                    width: width * 0.1,
-                                    decoration: BoxDecoration(
-                                        color: selected_mode == 2 ? Color(0xFF996C6C) : Color(0xFFC18686),
-                                        shape: BoxShape.circle
-                                    ),
-                                  ),
-                                  Text('PRO', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.normal),)
-                                ],
+                              child: Container(
+                                child: Text('PRO', style: GoogleFonts.jost(color: selected_mode == 2 ? Color(0xFFC18686) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                                decoration: BoxDecoration(
+                                    color: selected_mode == 2 ? Colors.white : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(30)
+                                ),
+                                padding: EdgeInsets.only(left: 8, right: 8, top: 4, bottom: 4),
+                              ),
+                              padding: EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 8),
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFC18686),
+                                  borderRadius: BorderRadius.circular(30)
                               ),
                             ),
                             onTap: () {
@@ -353,7 +331,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                                 selected_mode = 2;
                               });
                             },
-                          )
+                          ),
                         ],
                       ),
                     ),

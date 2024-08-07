@@ -53,7 +53,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       'phone': phoneController.text,
       'email': emailController.text,
       'query': queryController.text,
-      'notes': notesController.text
+      'notes': notesController.text,
+      'type': type == 0 ? 'child' : 'adult'
     });
     AndroidOptions _getAndroidOptions() => const AndroidOptions(
         encryptedSharedPreferences: true
@@ -114,7 +115,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
                        Container(
-                         margin: EdgeInsets.only(top: height * 0.15),
+                         margin: EdgeInsets.only(top: height * 0.18),
                          child: ElevatedButton(
                            child: Text('Ребенок', style: GoogleFonts.jost(color: Colors.white, fontSize: 12),),
                            style: ElevatedButton.styleFrom(
@@ -128,7 +129,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                          ),
                        ),
                        Container(
-                         margin: EdgeInsets.only(top: height * 0.15, left: width * 0.05),
+                         margin: EdgeInsets.only(top: height * 0.18, left: width * 0.05),
                          child: ElevatedButton(
                            child: Text('Взрослый', style: GoogleFonts.jost(color: Colors.white, fontSize: 12),),
                            style: ElevatedButton.styleFrom(
@@ -153,7 +154,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Имя ребенка' : 'Имя',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -177,7 +178,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Фамилия ребенка' : 'Фамилия',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -202,7 +203,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: 'Имя родителя',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -226,7 +227,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Дата рождения ребенка' : 'Дата рождения',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -250,7 +251,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: 'Телефон',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -274,7 +275,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: 'Почта',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -298,7 +299,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
                           hintText: type == 0 ? 'Жалобы/причина визита' : 'Запрос',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(
@@ -322,7 +323,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12, right: width * 0.03),
                           hintText: 'Дополнительные заметки и комментарии',
-                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 12),
+                          hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 14),
                           filled: true,
                           fillColor: Color(0XFF86B0CB),
                           enabledBorder: OutlineInputBorder(

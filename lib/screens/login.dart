@@ -73,14 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SvgPicture.asset('assets/login_logo.svg', fit: BoxFit.cover, height: height * 0.45,),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.15),
+            margin: EdgeInsets.only(left: width * 0.1, right: width * 0.1, top: height * 0.15),
             child: TextField(
               keyboardType: TextInputType.emailAddress,
               cursorColor: Colors.white,
               style: GoogleFonts.jost(color: Colors.white),
               controller: emailController,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
+                contentPadding: EdgeInsets.only(left: width * 0.03, top: 8, bottom: 8),
                 hintText: 'Логин',
                 hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
                 filled: true,
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(left: width * 0.15, right: width * 0.15, top: height * 0.02),
+            margin: EdgeInsets.only(left: width * 0.1, right: width * 0.1, top: height * 0.02),
             child: TextField(
               keyboardType: TextInputType.visiblePassword,
               cursorColor: Colors.white,
@@ -105,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
               controller: passwordController,
               obscureText: true,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: width * 0.03, top: 12, bottom: 12),
+                contentPadding: EdgeInsets.only(left: width * 0.03, top: 8, bottom: 8),
                 hintText: 'Пароль',
                 hintStyle: GoogleFonts.jost(color: Colors.white, fontSize: 18),
                 filled: true,
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Expanded(
             child: Container(
               width: width,
-              margin: EdgeInsets.only(top: height * 0.05),
+              margin: EdgeInsets.only(top: height * 0.025),
               decoration: BoxDecoration(
                 color: Color(0xFF367CA9),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(60), topRight: Radius.circular(60))

@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     SafeArea(
                       child: Container(
                         alignment: Alignment.topLeft,
-                        margin: EdgeInsets.only(left: width * 0.02, top: height * 0.02),
+                        margin: EdgeInsets.only(left: width * 0.04, top: height * 0.02),
                         child: SvgPicture.asset('assets/select_mode_4.svg', width: width * 0.2,),
                       ),
                     ),
@@ -84,58 +84,57 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: height * 0.05, left: width * 0.1),
-                      child: Text('Информация о пройденных занятих', style: GoogleFonts.jost(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          padding: EdgeInsets.only(bottom: 28, top: 14, right: 8),
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: Text('Занятие', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
+                      margin: EdgeInsets.only(top: height * 0.02),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(bottom: 28, top: 14, right: 8),
+                            child: Align(
+                              alignment: Alignment.topRight,
+                              child: Text('№', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                            ),
                           ),
-                        ),
-                        Container(
-                          color: Color(0xFFDBE7EF),
-                          padding: EdgeInsets.only(bottom: 28, top: 14),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: width * 0.18,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text('День', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
+                          Container(
+                            color: Color(0xFFDBE7EF),
+                            padding: EdgeInsets.only(bottom: 6, top: 14),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: width * 0.18,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('День', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                width: width * 0.18,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text('Режим', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
+                                Container(
+                                  width: width * 0.18,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('Режим', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                width: width * 0.18,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text('Оценка', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
+                                Container(
+                                  width: width * 0.18,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('Оценка', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                width: width * 0.18,
-                                child: Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Text('Лучшее время', style: GoogleFonts.jost(color: Colors.black, fontSize: 12, fontWeight: FontWeight.normal),),
+                                Container(
+                                  width: width * 0.18,
+                                  child: Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text('Лучшее время', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: height * 0.02, right: width * 0.01),

@@ -235,7 +235,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
               Container(
                 alignment: Alignment.topLeft,
                 margin: EdgeInsets.only(left: width * 0.05, top: height * 0.01),
-                child: Text(training, style: GoogleFonts.jost(color: Color(0xFF86B0CB), fontSize: 28, fontWeight: FontWeight.bold),),
+                child: Text(training, style: GoogleFonts.jost(color: Color(0xFF86B0CB), fontSize: 20, fontWeight: FontWeight.bold),),
               ),
               Container(
                 child: Column(
