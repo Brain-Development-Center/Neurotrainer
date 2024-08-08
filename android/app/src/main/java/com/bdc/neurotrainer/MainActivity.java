@@ -8,6 +8,7 @@ import com.neurosky.connection.DataType.MindDataType;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothClass;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -17,6 +18,9 @@ import android.content.IntentFilter;
 import android.content.Intent;
 import android.content.Context;
 import android.content.BroadcastReceiver;
+
+import java.util.EnumMap;
+import java.util.UUID;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,7 +78,19 @@ public class MainActivity extends FlutterActivity {
         Log.i(TAG, "Connected");
     }
 
+    public int connectDevice(BluetoothDevice device) {
+        try {
+            final UUID SPP_SERVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+            BluetoothSocket socket = device.createRfcommSocketToServiceRecord(SPP_SERVICE_UUID);
+            socket.connect();
+            return 1;
+        } catch (Exception e) {
+            return -1;
+        }
+    }
+
     Map<String, String> devices = new HashMap<>();
+    Map<String, BluetoothDevice> ds = new HashMap<String,BluetoothDevice>();
 
     public Map<String, String> getDevices() {
         return devices;
@@ -87,6 +103,11 @@ public class MainActivity extends FlutterActivity {
         registerReceiver(receiver, filter);
     }
 
+    public void stopScan() {
+        mBluetoothAdapter.cancelDiscovery();
+        unregisterReceiver(receiver);
+    }
+
     public final BroadcastReceiver receiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -96,6 +117,7 @@ public class MainActivity extends FlutterActivity {
                 String deviceHardwareAddress = device.getAddress();
                 if (!devices.containsKey(deviceHardwareAddress) && deviceName != null) {
                     devices.put(deviceHardwareAddress, deviceName);
+                    ds.put(deviceName, device);
                 }
             }
         }
@@ -110,10 +132,16 @@ public class MainActivity extends FlutterActivity {
                 listen();
             } else if (call.method.equals("getNum")) {
                 result.success(nums);
-            } else if (call.method.equals("call")) {
+            } else if (call.method.equals("getDevices")) {
                 result.success(getDevices());
             } else if (call.method.equals("scan")) {
                 startScan();
+            } else if (call.method.equals("stopScan")) {
+                stopScan();
+            } else if (call.method.equals("connectDevice")) {
+                Object deviceName = call.arguments;
+                String name = deviceName.toString().replace("[", "").replace("]", "");
+                result.success(connectDevice(ds.get(name)));
             }
         });
     }

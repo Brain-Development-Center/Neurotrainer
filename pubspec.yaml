@@ -46,7 +46,6 @@ dependencies:
   video_player: ^2.9.1
   image_picker: ^1.1.2
   youtube_player_flutter: ^9.0.1
-  flutter_blue_plus: ^1.32.11
 
 dev_dependencies:
   flutter_test:

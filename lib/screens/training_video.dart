@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 
 class TrainingVideoScreen extends StatefulWidget {
@@ -69,7 +68,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
     while (true) {
       List<String> ds = [];
       try {
-        final result = await platform.invokeMethod<Map<Object?, Object?>>("call");
+        final result = await platform.invokeMethod<Map<Object?, Object?>>("getDevices");
         result!.forEach((Object? key, Object? value) {
           ds.add(value.toString());
         });
@@ -85,6 +84,35 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
   void startScan() async {
     try {
       platform.invokeMethod<String>("scan");
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+  void stopScan() {
+    try {
+      platform.invokeMethod<String>("stopScan");
+    } on PlatformException catch (e) {
+      print(e);
+    }
+  }
+
+  void connectDevice(String device) async {
+    setState(() {
+      connectedStatus = 0;
+    });
+    try {
+      int? result = await platform.invokeMethod<int>("connectDevice", [device]);
+      print(result);
+      if (result == 1) {
+        setState(() {
+          connectedStatus = 1;
+        });
+      } else {
+        setState(() {
+          connectedStatus = 0;
+        });
+      }
     } on PlatformException catch (e) {
       print(e);
     }
@@ -134,7 +162,6 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
     super.initState();
     // _getText();
     // getNums();
-    startScan();
     _getDevices();
   }
 
@@ -143,7 +170,8 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
   bool isTraining = false;
   bool isSuccess = false;
 
-  bool isConnected = false;
+  int connectedStatus = -1;
+  int connectedIndex = -1;
 
   @override
   void dispose() {
@@ -212,7 +240,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                                 margin: EdgeInsets.only(left: width * 0.01),
                               ),
                               Container(
-                                child: Text(isConnected ? 'ON' : 'OFF', style: GoogleFonts.jost(color: isConnected ? Color(0xFF86BCC1) : Color(0xFFC18686), fontWeight: FontWeight.bold, fontSize: width * 0.03),),
+                                child: Text(connectedStatus == -1 ? "OFF" : (connectedStatus == 0 ? "PAIR" : "ON"), style: GoogleFonts.jost(color: connectedStatus == -1 ? Color(0xFFC18686) : (connectedStatus == 0 ? Color(0xFFE8C13A) : Color(0xFF86BCC1)), fontWeight: FontWeight.bold, fontSize: width * 0.03),),
                                 margin: EdgeInsets.only(right: width * 0.01, left: width * 0.02),
                               ),
                               Container(
@@ -222,12 +250,20 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                                 child: IconButton(
                                   icon: SvgPicture.asset('assets/infinity.svg', fit: BoxFit.cover, width: width * 0.04,),
                                   onPressed: () {
-                                    setState(() {
-                                      windowOpened = !windowOpened;
-                                    });
+                                    if (windowOpened) {
+                                      stopScan();
+                                      setState(() {
+                                        windowOpened = false;
+                                      });
+                                    } else {
+                                      startScan();
+                                      setState(() {
+                                        windowOpened = true;
+                                      });
+                                    }
                                   },
                                   style: IconButton.styleFrom(
-                                      backgroundColor: isConnected ? Color(0xFF86BCC1) : Color(0xFFC18686)
+                                      backgroundColor: connectedStatus == -1 ? Color(0xFFC18686) : (connectedStatus == 0 ? Color(0xFFE8C13A) : Color(0xFF86BCC1))
                                   ),
                                 ),
                               ),
@@ -651,8 +687,13 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                                   children: [
                                     Text(devices[index], style: GoogleFonts.jost(color: Colors.white, fontSize: width * 0.02),),
                                     ElevatedButton(
-                                      child: Text('Подключиться', style: GoogleFonts.jost(color: Colors.black, fontSize: width * 0.02)),
-                                      onPressed: () {},
+                                      child: Text((connectedIndex == index && connectedStatus == 0) ? 'Подключение' : ((connectedIndex == index && connectedStatus == 1) ? 'Подключено' : 'Подключиться'), style: GoogleFonts.jost(color: Colors.black, fontSize: width * 0.02)),
+                                      onPressed: () {
+                                        setState(() {
+                                          connectedIndex = index;
+                                        });
+                                        connectDevice(devices[index]);
+                                      },
                                       style: ElevatedButton.styleFrom(
                                           backgroundColor: Colors.white
                                       ),
