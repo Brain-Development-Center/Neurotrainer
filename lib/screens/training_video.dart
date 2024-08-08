@@ -143,6 +143,8 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
   bool isTraining = false;
   bool isSuccess = false;
 
+  bool isConnected = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -210,7 +212,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                                 margin: EdgeInsets.only(left: width * 0.01),
                               ),
                               Container(
-                                child: Text('ON', style: GoogleFonts.jost(color: Color(0xFF86BCC1), fontWeight: FontWeight.bold, fontSize: width * 0.03),),
+                                child: Text(isConnected ? 'ON' : 'OFF', style: GoogleFonts.jost(color: isConnected ? Color(0xFF86BCC1) : Color(0xFFC18686), fontWeight: FontWeight.bold, fontSize: width * 0.03),),
                                 margin: EdgeInsets.only(right: width * 0.01, left: width * 0.02),
                               ),
                               Container(
@@ -225,7 +227,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                                     });
                                   },
                                   style: IconButton.styleFrom(
-                                      backgroundColor: Color(0xFF86BCC1)
+                                      backgroundColor: isConnected ? Color(0xFF86BCC1) : Color(0xFFC18686)
                                   ),
                                 ),
                               ),
