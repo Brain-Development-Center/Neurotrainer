@@ -6,11 +6,26 @@ import com.neurosky.connection.*;
 import com.neurosky.connection.DataType.MindDataType;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothClass;
+import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import android.os.Message;
 import android.util.Log;
+import android.content.IntentFilter;
+import android.content.Intent;
+import android.content.Context;
+import android.content.BroadcastReceiver;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+import java.lang.String;
 
 import android.os.Handler;
 import java.util.logging.LogRecord;
@@ -22,6 +37,7 @@ import com.neurosky.connection.DataType.MindDataType.FilterType;
 
 import com.neurosky.connection.TgStreamReader.ParserType;
 
+
 public class MainActivity extends FlutterActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -32,15 +48,6 @@ public class MainActivity extends FlutterActivity {
     private BluetoothAdapter mBluetoothAdapter;
 
     double nums[] = new double[10];
-    double mEEGData[] = new double[10];
-    float lDelta = 0.5F;
-    float lTheta = 4.0F;
-    float lAlpha = 8.0F;
-    float lSmr = 12.0F;
-    float lBeta = 13.0F;
-    float lmBeta = 15.0F;
-    float lhBeta = 20.0F;
-    float lGamma = 30.0F;
 
     public String connectBluetooth() {
         String connect = "Bluetooth adapter is not working";
@@ -67,6 +74,33 @@ public class MainActivity extends FlutterActivity {
         Log.i(TAG, "Connected");
     }
 
+    Map<String, String> devices = new HashMap<>();
+
+    public Map<String, String> getDevices() {
+        return devices;
+    }
+
+    public void startScan() {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        mBluetoothAdapter.startDiscovery();
+        IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        registerReceiver(receiver, filter);
+    }
+
+    public final BroadcastReceiver receiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                String deviceName = device.getName();
+                String deviceHardwareAddress = device.getAddress();
+                if (!devices.containsKey(deviceHardwareAddress) && deviceName != null) {
+                    devices.put(deviceHardwareAddress, deviceName);
+                }
+            }
+        }
+    };
+
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
@@ -76,6 +110,10 @@ public class MainActivity extends FlutterActivity {
                 listen();
             } else if (call.method.equals("getNum")) {
                 result.success(nums);
+            } else if (call.method.equals("call")) {
+                result.success(getDevices());
+            } else if (call.method.equals("scan")) {
+                startScan();
             }
         });
     }
@@ -139,10 +177,10 @@ public class MainActivity extends FlutterActivity {
                 case MindDataType.CODE_RAW:
                     break;
                 case MindDataType.CODE_MEDITATION:
-                    nums[10] = msg.arg1;
+//                    nums[9] = msg.arg1;
                     break;
                 case MindDataType.CODE_ATTENTION:
-                    nums[8] = msg.arg1;
+//                    nums[8] = msg.arg1;
                     break;
                 case MindDataType.CODE_EEGPOWER:
                     EEGPower power = (EEGPower)msg.obj;

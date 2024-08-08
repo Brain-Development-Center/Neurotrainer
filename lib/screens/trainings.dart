@@ -268,7 +268,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                             child: Container(
                               margin: EdgeInsets.only(left: width * 0.05),
                               child: Container(
-                                child: Text('Class', style: GoogleFonts.jost(color: selected_mode == 0 ? Color(0xFF86B0CB) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                                child: Text('Classic', style: GoogleFonts.jost(color: selected_mode == 0 ? Color(0xFF86B0CB) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
                                 decoration: BoxDecoration(
                                   color: selected_mode == 0 ? Colors.white : Colors.transparent,
                                     borderRadius: BorderRadius.circular(30)
@@ -291,7 +291,7 @@ class _TrainingsScreenState extends State<TrainingsScreen> {
                             child: Container(
                               margin: EdgeInsets.only(left: width * 0.01, right: width * 0.01),
                               child: Container(
-                                child: Text('70%', style: GoogleFonts.jost(color: selected_mode == 1 ? Color(0xFF86BCC1) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
+                                child: Text('Adapt', style: GoogleFonts.jost(color: selected_mode == 1 ? Color(0xFF86BCC1) : Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
                                 decoration: BoxDecoration(
                                     color: selected_mode == 1 ? Colors.white : Colors.transparent,
                                     borderRadius: BorderRadius.circular(30)
