@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'dart:async';
 
 
 class TrainingVideoScreen extends StatefulWidget {
@@ -61,6 +62,11 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
     });
   }
 
+  Timer? timer;
+
+  int successSeconds = 0;
+  int bestSuccessSeconds = 0;
+
   void getNums() async {
     while (true) {
       List<double> t;
@@ -71,6 +77,27 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
         t = [];
       }
       print(t);
+      if (attention != t[8]) {
+        setState(() {
+          attention = t[8];
+          if (trainingMode == 1 && attention < 70) {
+            videoPlayerController.pause();
+            setState(() {
+              timer = Timer.periodic(Duration(seconds: 1), (Timer _timer) {
+                setState(() {
+                  successSeconds++;
+                });
+              });
+            });
+            isSuccess = false;
+          } else if (!isSuccess) {
+            videoPlayerController.play();
+            setState(() {
+              timer!.cancel();
+            });
+          }
+        });
+      }
     }
   }
 
@@ -84,6 +111,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
   double attention = 0;
 
   bool isTraining = false;
+  bool isSuccess = false;
 
   @override
   void dispose() {
@@ -99,6 +127,70 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
       body: Column(
         children: [
           SafeArea(
+            child: Container(
+              margin: EdgeInsets.only(top: height * 0.01),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: width * 0.01, right: width * 0.01),
+                        child: IconButton(
+                          icon: Icon(Icons.close, color: Colors.white, size: width * 0.03,),
+                          onPressed: () {},
+                          style: IconButton.styleFrom(
+                              backgroundColor: Color(0xFFC18686)
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                        child: Text('Завершить', style: GoogleFonts.jost(color: Colors.white, fontSize: width * 0.03),),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF86B0CB)
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        child: Text('Время сессии', style: GoogleFonts.jost(color: Colors.black, fontWeight: FontWeight.bold, fontSize: width * 0.03),),
+                      ),
+                      Container(
+                        child: Text('9:58', style: GoogleFonts.jost(color: Colors.white, fontWeight: FontWeight.bold, fontSize: width * 0.03),),
+                        padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+                        decoration: BoxDecoration(
+                            color: Color(0xFF86B0CB),
+                            borderRadius: BorderRadius.circular(26)
+                        ),
+                        margin: EdgeInsets.only(left: width * 0.01),
+                      ),
+                      Container(
+                        child: Text('ON', style: GoogleFonts.jost(color: Color(0xFF86BCC1), fontWeight: FontWeight.bold, fontSize: width * 0.03),),
+                        margin: EdgeInsets.only(right: width * 0.01, left: width * 0.02),
+                      ),
+                      Container(
+                        height: width * 0.06,
+                        width: width * 0.06,
+                        margin: EdgeInsets.only(right: width * 0.01),
+                        child: IconButton(
+                          icon: SvgPicture.asset('assets/infinity.svg', fit: BoxFit.cover, width: width * 0.04,),
+                          onPressed: () {},
+                          style: IconButton.styleFrom(
+                              backgroundColor: Color(0xFF86BCC1)
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            )
+          ),
+          Container(
+            margin: EdgeInsets.only(top: height * 0.02),
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -152,50 +244,102 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                             ),
                             child: Row(
                               children: [
-                                IconButton(
-                                  icon: Icon(Icons.replay_5, color: Color(0xFFABABAB),),
-                                  style: IconButton.styleFrom(
-                                      backgroundColor: Color(0xFFD9D9D9)
+                                Container(
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.fast_rewind_rounded, color: Color(0xFFABABAB)),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      videoPlayerController.seekTo(Duration(seconds: -5));
-                                    });
-                                  },
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.play_arrow, color: Color(0xFFABABAB),),
-                                  style: IconButton.styleFrom(
-                                      backgroundColor: Color(0xFFD9D9D9)
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.push_pin, color: Colors.white),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      videoPlayerController.play();
-                                    });
-                                  },
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.forward_5, color: Color(0xFFABABAB),),
-                                  style: IconButton.styleFrom(
-                                      backgroundColor: Color(0xFFD9D9D9)
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.replay_5, color: Color(0xFFABABAB)),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      videoPlayerController.seekTo(Duration(seconds: 5));
-                                    });
-                                  },
                                 ),
-                                IconButton(
-                                  icon: Icon(Icons.close, color: Color(0xFFABABAB),),
-                                  style: IconButton.styleFrom(
-                                    backgroundColor: Color(0xFFD9D9D9),
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.play_arrow, color: Color(0xFFABABAB)),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
                                   ),
-                                  onPressed: () {
-                                    setState(() {
-                                      type = -1;
-                                      videoPlayerController.dispose();
-                                    });
-                                  },
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.forward_5, color: Color(0xFFABABAB)),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.close, color: Colors.white),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(left: width * 0.01),
+                                  height: width * 0.04,
+                                  width: width * 0.04,
+                                  child: IconButton(
+                                      icon: Icon(Icons.fast_forward, color: Color(0xFFABABAB)),
+                                      padding: EdgeInsets.all(0),
+                                      style: IconButton.styleFrom(
+                                        iconSize: width * 0.025,
+                                        backgroundColor: Color(0xFFD9D9D9),
+                                      ),
+                                      onPressed: () {}
+                                  ),
                                 ),
                               ],
                             ),
@@ -227,7 +371,7 @@ class _TrainingVideoScreenState extends State<TrainingVideoScreen> {
                   ],
                 ) : Container()
               ],
-            )
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

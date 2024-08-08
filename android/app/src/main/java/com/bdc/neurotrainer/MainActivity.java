@@ -31,7 +31,7 @@ public class MainActivity extends FlutterActivity {
 
     private BluetoothAdapter mBluetoothAdapter;
 
-    double nums[] = new double[9];
+    double nums[] = new double[10];
     double mEEGData[] = new double[10];
     float lDelta = 0.5F;
     float lTheta = 4.0F;
@@ -139,8 +139,10 @@ public class MainActivity extends FlutterActivity {
                 case MindDataType.CODE_RAW:
                     break;
                 case MindDataType.CODE_MEDITATION:
+                    nums[10] = msg.arg1;
                     break;
                 case MindDataType.CODE_ATTENTION:
+                    nums[8] = msg.arg1;
                     break;
                 case MindDataType.CODE_EEGPOWER:
                     EEGPower power = (EEGPower)msg.obj;

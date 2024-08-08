@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: width * 0.18,
                                   child: Align(
                                     alignment: Alignment.topCenter,
-                                    child: Text('Оценка', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
+                                    child: Text('% успешности', style: GoogleFonts.jost(color: Colors.black, fontSize: 14, fontWeight: FontWeight.normal),),
                                   ),
                                 ),
                                 Container(
